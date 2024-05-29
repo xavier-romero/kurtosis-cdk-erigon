@@ -1,0 +1,18 @@
+{
+    "adminZkEVM": "{{.admin.address}}",
+    "chainID": {{.l2_chain_id}},
+    "consensusContract": "{{.rollup_consensus}}",
+    "deployerPvtKey": "{{.admin.private_key}}",
+    "description": "kurtosis-devnet",
+    "forkID": {{.rollup_fork_id}},
+    "gasTokenAddress":"",
+    "maxFeePerGas": "",
+    "maxPriorityFeePerGas": "",
+    "multiplierGas": "",
+    "networkName": "kurtosis-test",
+    "realVerifier": "false",
+    "trustedSequencer": "{{.sequencer.address}}",
+    "trustedSequencerURL": "http://zkevm-node-sequencer{{.suffix}}:{{.zkevm_rpc_http_port}}",
+    "trustedAggregator":"{{.aggregator.address}}"
+}
+

@@ -1,0 +1,5 @@
+name: github.com/0xPolygon/kurtosis-cdk
+description: |-
+  Polygon CDK Erigon
+  ========
+  This package allows you to provision a Polygon CDK Erigon Devnet within Kurtosis

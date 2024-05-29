@@ -1,0 +1,42 @@
+datadir : '/datadir'
+chain : "dynamic-cdk"
+http : true
+private.api.addr : "localhost:9096"
+zkevm.l2-chain-id: {{.l2_chain_id}}
+zkevm.l2-sequencer-rpc-url: {{.seq_rpc}}
+zkevm.l2-datastreamer-url: {{.seq_ds}}
+zkevm.l1-chain-id: {{.l1_chain_id}}
+zkevm.l1-rpc-url: {{.l1_rpc_url}}
+
+zkevm.address-sequencer: {{.sequencer.address}}
+zkevm.address-zkevm: {{.zkevmAddress}}
+zkevm.address-admin: {{.admin.address}}
+zkevm.address-rollup: {{.rollupAddress}}
+zkevm.address-ger-manager: {{.gerAddress}}
+
+zkevm.l1-rollup-id: 1
+zkevm.l1-matic-contract-address: {{.polAddress}}
+zkevm.l1-block-range: 20000
+zkevm.l1-query-delay: 6000
+# zkevm.l1-first-block: {{.rollupBlockNumber}}
+zkevm.l1-first-block: 1
+zkevm.rpc-ratelimit: 250
+zkevm.data-stream-port: 6900
+zkevm.datastream-version: 2
+zkevm.data-stream-host: "127.0.0.1"
+zkevm.sequencer-initial-fork-id: {{.fork_id}}
+zkevm.executor-strict: false
+zkevm.witness-full: false
+zkevm.sequencer-block-seal-time: "30m"
+zkevm.sequencer-batch-seal-time: "4h"
+zkevm.allow-pre-eip155-transactions: true
+
+externalcl: true
+http.api : ["eth","debug","net","trace","web3","erigon","txpool","zkevm"]
+http.addr: "0.0.0.0"
+http.port: 8123
+http.vhosts: '*'
+http.corsdomain: '*'
+
+ws: true
+rpc.batch.limit: 500
