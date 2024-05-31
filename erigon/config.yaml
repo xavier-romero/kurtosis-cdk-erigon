@@ -20,6 +20,8 @@ zkevm.l1-block-range: 20000
 zkevm.l1-query-delay: 6000
 # zkevm.l1-first-block: {{.rollupBlockNumber}}
 zkevm.l1-first-block: 1
+zkevm.l1-highest-block-type: "latest"
+
 zkevm.rpc-ratelimit: 250
 zkevm.data-stream-port: 6900
 zkevm.datastream-version: 2

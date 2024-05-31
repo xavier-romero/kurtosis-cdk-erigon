@@ -3,8 +3,7 @@ deployment_suffix: "001"
 l1:
   chain_id: 271828
   preallocated_mnemonic: code code code code code code code code code code code quality
-  additional_services: []
-  blockscout: true
+  additional_services: ["blockscout"]
 
 addresses:
   sequencer:
@@ -39,4 +38,7 @@ contracts:
   keystore_password: pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m
 
 erigon:
-  image: hermeznetwork/cdk-erigon:20240529132709-3e3013f-amd64
+  image: hermeznetwork/cdk-erigon:zkevm-673a1e7-amd64
+
+ssender:
+  image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7

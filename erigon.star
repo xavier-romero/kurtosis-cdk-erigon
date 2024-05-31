@@ -10,6 +10,7 @@ def _generate_config_file(plan, cfg, service):
         config={cfg_filename: struct(template=cfg_file_tpl, data=cfg)},
     )
 
+
 def _generate_dynamic_files(plan, cfg):
     # Dynamic config files
     dyn_script = "./erigon/generate_dynamic_files.py"
@@ -41,14 +42,14 @@ def _generate_dynamic_files(plan, cfg):
 def _get_genesis_params(plan):
     # Retrieve specific genesis parameters
     genesis_params = {}
-    for (k, param) in (
+    for k, param in (
         ("rollupAddress", "polygonRollupManagerAddress"),
         ("zkevmAddress", "polygonZkEVMAddress"),
         ("gerAddress", "polygonZkEVMGlobalExitRootAddress"),
         ("polAddress", "polTokenAddress"),
     ):
         result = plan.run_sh(
-            run="jq -j .L1Config." + param + " /input/genesis.json",
+            run="jq -j .l1Config." + param + " /input/genesis.json",
             files={"/input": plan.get_files_artifact("genesis.json")},
         )
         genesis_params[k] = result.output.strip()
@@ -57,7 +58,7 @@ def _get_genesis_params(plan):
         run="jq -j .createRollupBlockNumber /input/create_rollup_output.json",
         files={"/input": plan.get_files_artifact("create_rollup_output.json")},
     )
-    genesis_params['rollupBlockNumber'] = result.output.strip()
+    genesis_params["rollupBlockNumber"] = result.output.strip()
 
     return genesis_params
 
@@ -76,7 +77,7 @@ def _deploy_service(plan, cfg, service):
         image=service_image,
         ports={
             "{}-{}".format(service_name, service_port): PortSpec(
-                service_port, application_protocol="http"
+                service_port, application_protocol="http", wait="20s"
             )
             for service_port in service_ports
         },
@@ -90,12 +91,12 @@ def _deploy_service(plan, cfg, service):
                     plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
                 ]
             ),
-            "/datadir": Directory(persistent_key="erigon-{}-datadir".format(service.lower())),
+            # "/datadir": Directory(persistent_key="erigon-{}-datadir".format(service.lower())),
         },
         cmd=service_cmd,
         # Temporary solution to avoid permission issues on datadir
         # Erigon by defaults uses user 1000:1000 so we would need to set the folder perms
-        user = User(uid=0, gid=0),
+        user=User(uid=0, gid=0),
     )
 
     service = plan.add_service(
@@ -126,16 +127,18 @@ def run(plan, cfg):
     _generate_config_file(plan, sequencer_cfg, service)
     sequencer_service = _deploy_service(plan, sequencer_cfg, service)
 
-    # plan.print("Deploying Erigon RPC")
-    # service = "RPC"
-    # sequencer_rpc = "http://{}:{}".format(
-    #     sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][0]
-    # )
-    # sequencer_ds = "{}:{}".format(
-    #     sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][1]
-    # )
-    # rpc_cfg = cfg | gen_params | {"seq_rpc": sequencer_rpc, "seq_ds": sequencer_ds}
-    # _generate_config_file(plan, sequencer_cfg, service)
-    # rpc_service = _deploy_service(plan, rpc_cfg, "RPC")
+    plan.print("Deploying Erigon RPC")
+    service = "RPC"
+    sequencer_rpc = "http://{}:{}".format(
+        sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][0]
+    )
+    sequencer_ds = "{}:{}".format(
+        sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][1]
+    )
+    plan.print("Sequencer RPC: {}".format(sequencer_rpc))
+    plan.print("Sequencer DS: {}".format(sequencer_ds))
+    rpc_cfg = cfg | gen_params | {"seq_rpc": sequencer_rpc, "seq_ds": sequencer_ds}
+    _generate_config_file(plan, rpc_cfg, service)
+    rpc_service = _deploy_service(plan, rpc_cfg, "RPC")
 
-    # return sequencer_service, rpc_service
+    return sequencer_service, rpc_service
