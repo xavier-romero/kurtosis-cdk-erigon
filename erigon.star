@@ -83,14 +83,22 @@ def _deploy_service(plan, cfg, service):
         },
         env_vars=service_vars,
         files={
-            cfg_path: plan.get_files_artifact("erigon-" + service + "-" + cfg_filename),
-            "/root/dynamic-configs": Directory(
+            cfg_path: Directory(
                 artifact_names=[
+                    plan.get_files_artifact("erigon-" + service + "-" + cfg_filename),
                     plan.get_files_artifact("erigon-dynamic-cdk-allocs"),
                     plan.get_files_artifact("erigon-dynamic-cdk-conf"),
                     plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
                 ]
-            ),
+            )
+            # cfg_path: plan.get_files_artifact("erigon-" + service + "-" + cfg_filename),
+            # "/etc/erigon/dynamic-configs": Directory(
+            #     artifact_names=[
+            #         plan.get_files_artifact("erigon-dynamic-cdk-allocs"),
+            #         plan.get_files_artifact("erigon-dynamic-cdk-conf"),
+            #         plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
+            #     ]
+            # ),
             # "/datadir": Directory(persistent_key="erigon-{}-datadir".format(service.lower())),
         },
         cmd=service_cmd,

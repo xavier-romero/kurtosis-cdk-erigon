@@ -38,7 +38,7 @@ contracts:
   keystore_password: pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m
 
 erigon:
-  image: hermeznetwork/cdk-erigon:zkevm-673a1e7-amd64
+  image: hermeznetwork/cdk-erigon:zkevm-c709a8c-amd64
 
 ssender:
   image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
