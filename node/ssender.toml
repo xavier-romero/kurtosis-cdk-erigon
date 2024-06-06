@@ -1,0 +1,35 @@
+[Log]
+Environment = "development"
+Level = "info"
+Outputs = ["stdout"]
+
+[SequenceSender]
+WaitPeriodSendSequence = "15s"
+LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
+MaxTxSizeForL1 = 131072
+L2Coinbase =  "{{.sequencer.address}}"
+PrivateKey = {Path = "/config/sequencer.keystore", Password = "{{.keystore_password}}"}
+SequencesTxFileName = "/tmp/sequencesender.json"
+GasOffset = 80000
+WaitPeriodPurgeTxFile = "48h"
+MaxPendingTx = 1
+	[SequenceSender.StreamClient]
+		Server = "{{.datastream_address}}"
+	[SequenceSender.EthTxManager]
+		FrequencyToMonitorTxs = "1s"
+		WaitTxToBeMined = "2m"
+		ConsolidationL1ConfirmationBlocks = 5
+		FinalizationL1ConfirmationBlocks = 10
+		WaitReceiptToBeGenerated = "8s"
+		PrivateKeys = [
+			{Path = "/config/sequencer.keystore", Password = "{{.keystore_password}}"},
+		]
+		ForcedGas = 0
+		GasPriceMarginFactor = 1
+		MaxGasPriceLimit = 0
+		PersistenceFilename = "/tmp/ethtxmanager.json"
+			[SequenceSender.EthTxManager.Etherman]
+				URL = "{{.l1_rpc_url}}"
+				MultiGasProvider = false
+				L1ChainID =  {{.l1_chain_id}}
+				HTTPHeaders = []

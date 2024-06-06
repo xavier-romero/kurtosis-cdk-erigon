@@ -72,9 +72,9 @@ json.dump(erigon_dyn_chainspec, f, indent=2)
 f.close()
 
 print(json.dumps({
-    'rollupAddress': deployment_genesis['L1Config']['polygonRollupManagerAddress'],
-    'zkevmAddress': deployment_genesis['L1Config']['polygonZkEVMAddress'],
-    'gerAddress': deployment_genesis['L1Config']['polygonZkEVMGlobalExitRootAddress'],
-    'polAddress': deployment_genesis['L1Config']['polTokenAddress'],
+    'rollupAddress': deployment_genesis['l1Config']['polygonRollupManagerAddress'],
+    'zkevmAddress': deployment_genesis['l1Config']['polygonZkEVMAddress'],
+    'gerAddress': deployment_genesis['l1Config']['polygonZkEVMGlobalExitRootAddress'],
+    'polAddress': deployment_genesis['l1Config']['polTokenAddress'],
     'rollupBlockNumber': rollup_output['createRollupBlockNumber'],
 }))

@@ -22,10 +22,7 @@ CONTRACTS_CONFIG = {
 ARTIFACTS_TO_SAVE = {
     "path": "/opt/zkevm",
     # These files are used from erigon._generate_dynamic_files
-    "files": [
-        "create_rollup_output.json",
-        "genesis.json",
-    ],
+    "files": ["create_rollup_output.json", "genesis.json", "sequencer.keystore"],
 }
 
 
