@@ -1,6 +1,9 @@
 _RPC_HTTP_PORT = 8123
 _DAC_PORT = 8484
+_AGGR_PORT = 50081
 _L1_FUNDING_AMOUNT = "100ether"
+_SEQUENCER_RPC_PORT = 8123
+_SEQUENCER_DS_PORT = 6900
 
 
 def _get_erigon_config(cfg):
@@ -18,7 +21,7 @@ def _get_erigon_config(cfg):
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
             ],
-            "PORTS": [8123, 6900],
+            "PORTS": [_SEQUENCER_RPC_PORT, _SEQUENCER_DS_PORT],
             "ENV_VARS": {
                 "CDK_ERIGON_SEQUENCER": "1",
             },
@@ -30,7 +33,7 @@ def _get_erigon_config(cfg):
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
             ],
-            "PORTS": [8123, 6900],
+            "PORTS": [_SEQUENCER_RPC_PORT, _SEQUENCER_DS_PORT],
             "ENV_VARS": {},
         },
     }
@@ -45,6 +48,9 @@ def get_config(args):
         "zkevm_rpc_http_port": _RPC_HTTP_PORT,
         "zkevm_dac_port": _DAC_PORT,
         "l1_funding_amount": _L1_FUNDING_AMOUNT,
+        "aggregator_port": _AGGR_PORT,
+        "sequencer_rpc_port": _SEQUENCER_RPC_PORT,
+        "sequencer_ds_port": _SEQUENCER_DS_PORT,
     }
     if args.get("erigon"):
         cfg["erigon"] = _get_erigon_config(args.get("erigon"))

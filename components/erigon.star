@@ -1,7 +1,7 @@
 def _generate_config_file(plan, cfg, service):
     # Config file
     cfg_filename = cfg["COMMON"]["CONFIG_FILE"]
-    cfg_template = "./erigon/config.yaml"
+    cfg_template = "./config/erigon-config.yaml"
 
     cfg_file_tpl = read_file(src=cfg_template)
 
@@ -13,7 +13,7 @@ def _generate_config_file(plan, cfg, service):
 
 def _generate_dynamic_files(plan, cfg):
     # Dynamic config files
-    dyn_script = "./erigon/generate_dynamic_files.py"
+    dyn_script = "./scripts/generate_dynamic_files.py"
 
     script = read_file(src=dyn_script)
     result = plan.run_python(
@@ -128,8 +128,8 @@ def run(plan, cfg):
         cfg
         | gen_params
         | {
-            "seq_rpc": "http://127.0.0.1:8123",
-            "seq_ds": "127.0.0.1:6900",
+            "seq_rpc": "http://127.0.0.1:{}".format(cfg["sequencer_rpc_port"]),
+            "seq_ds": "127.0.0.1:{}".format(cfg["sequencer_ds_port"]),
         }
     )
     _generate_config_file(plan, sequencer_cfg, service)

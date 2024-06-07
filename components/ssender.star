@@ -1,4 +1,4 @@
-SSENDER_CONFIG_TEMPLATE = "./node/ssender.toml"
+SSENDER_CONFIG_TEMPLATE = "./config/ssender-config.toml"
 SSENDER_CONFIG_FILE = "ssender-config.toml"
 
 
@@ -31,7 +31,7 @@ def run(plan, cfg):
         "-c",
         "/app/zkevm-seqsender run --network custom --custom-network-file /config/genesis.json --cfg /config/"
         + SSENDER_CONFIG_FILE
-        + " --components sequence-sender",
+        # + " --components sequence-sender",
     ]
 
     service_config = ServiceConfig(

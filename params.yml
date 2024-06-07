@@ -41,7 +41,12 @@ erigon:
   image: hermeznetwork/cdk-erigon:zkevm-c709a8c-amd64
 
 ssender:
-  image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
+  # image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
+  image: hermeznetwork/zkevm-sequence-sender:v0.2.0-RC2
 
 aggregator:
+  # image: hermeznetwork/zkevm-aggregator:v0.0.2-RC23
   image: hermeznetwork/zkevm-aggregator:v0.0.2-RC22
+
+mockprover:
+  image: hermeznetwork/zkevm-prover:v6.0.3-RC16
