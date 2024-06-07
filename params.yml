@@ -42,3 +42,6 @@ erigon:
 
 ssender:
   image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
+
+aggregator:
+  image: hermeznetwork/zkevm-aggregator:v0.0.2-RC22

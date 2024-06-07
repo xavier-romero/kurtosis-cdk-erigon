@@ -59,3 +59,18 @@ def run(plan, args):
             }
         )
         import_module("./ssender.star").run(plan, ssender_config)
+
+    # Deploy aggregator
+    aggregator_config = cfg.get("aggregator")
+    if aggregator_config:
+        aggregator_config = (
+            aggregator_config
+            | cfg.get("addresses")
+            | {
+                "keystore_password": cfg["contracts"]["keystore_password"],
+                "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                "l1_chain_id": cfg["l1"]["chain_id"],
+                "datastream_address": "{}:6900".format(sequencer_service.ip_address),
+            }
+        )
+        import_module("./aggregator.star").run(plan, aggregator_config)
