@@ -38,15 +38,19 @@ contracts:
   keystore_password: pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m
 
 erigon:
-  image: hermeznetwork/cdk-erigon:zkevm-c709a8c-amd64
+  image: hermeznetwork/cdk-erigon:zkevm-58b66c2-amd64
 
 ssender:
   # image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
-  image: hermeznetwork/zkevm-sequence-sender:v0.2.0-RC2
+  image: hermeznetwork/zkevm-sequence-sender:v0.2.0-RC4
 
 aggregator:
-  # image: hermeznetwork/zkevm-aggregator:v0.0.2-RC23
-  image: hermeznetwork/zkevm-aggregator:v0.0.2-RC22
+  image: hermeznetwork/zkevm-aggregator:v0.0.2-RC26
+  # image: hermeznetwork/zkevm-aggregator:v0.0.2-RC22
 
 mockprover:
   image: hermeznetwork/zkevm-prover:v6.0.3-RC16
+
+# index:
+#   image: nginx
+#   public_port: 1337

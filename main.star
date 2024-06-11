@@ -6,6 +6,7 @@ databases_package = "./components/databases.star"
 aggregator_package = "./components/aggregator.star"
 ssender_package = "./components/ssender.star"
 mockprover_package = "./components/mockprover.star"
+index_package = "./index.star"
 
 
 def run(plan, args):
@@ -60,6 +61,11 @@ def run(plan, args):
     # Deploy sequence-sender
     ssender_config = cfg.get("ssender")
     if ssender_config:
+        plan.exec(
+            description="Allowing time for Sequencer DS to avoid SequenceSender failure",
+            service_name="foo",
+            recipe=ExecRecipe(command=["sleep", "30"]),
+        )
         ssender_config = (
             ssender_config
             | cfg.get("addresses")
@@ -75,11 +81,11 @@ def run(plan, args):
         import_module(ssender_package).run(plan, ssender_config)
 
     # Deploy aggregator
-    plan.exec(
-        description="Sleeping for a while",
-        service_name="foo",
-        recipe=ExecRecipe(command=["sleep", "1500"]),
-    )
+    # plan.exec(
+    #     description="Sleeping for a while",
+    #     service_name="foo",
+    #     recipe=ExecRecipe(command=["sleep", "1500"]),
+    # )
     aggregator_config = cfg.get("aggregator")
     if aggregator_config:
         aggregator_config = (
@@ -111,3 +117,12 @@ def run(plan, args):
             "aggregator_host": aggregator_service.ip_address,
         }
         import_module(mockprover_package).run(plan, mockprover_config)
+
+    # Deploy index
+    # index_config = cfg.get("index")
+    # if index_config:
+    #     index_config |= {
+    #         "aggregator_port": cfg["aggregator_port"],
+    #         "aggregator_host": aggregator_service.ip_address,
+    #     }
+    #     import_module(index_package).run(plan, index_config)

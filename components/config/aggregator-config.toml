@@ -29,6 +29,8 @@ UseFullWitness = true
 	[Aggregator.StreamClient]
 		Server = "{{.sequencer_ds_url}}"
 	[Aggregator.EthTxManager]
+		SafeStatusL1NumberOfBlocks = 1
+		FinalizedStatusL1NumberOfBlocks = 1
 		FrequencyToMonitorTxs = "1s"
 		WaitTxToBeMined = "2m"
 		ConsolidationL1ConfirmationBlocks = 5
@@ -58,5 +60,5 @@ UseFullWitness = true
 			SyncInterval = "10s"
 			SyncChunkSize = 1000
 			GenesisBlockNumber = 1 
-			SyncBlockProtection = "latest"
-			SyncBlockProtectionOffset = 0
+			SyncUpToBlock = "latest"
+			BlockFinality = "latest"

@@ -4,6 +4,7 @@ Level = "info"
 Outputs = ["stdout"]
 
 [SequenceSender]
+IsValidiumMode = false
 WaitPeriodSendSequence = "15s"
 LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
 MaxTxSizeForL1 = 131072
