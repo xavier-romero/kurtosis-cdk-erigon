@@ -14,7 +14,7 @@ def _gen_config_file(plan, cfg):
 def run(plan, cfg):
     _gen_config_file(plan, cfg)
 
-    service_name = "ssender"
+    service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]
     service_files = {
         "/config": Directory(

@@ -32,25 +32,28 @@ contracts:
   image: leovct/zkevm-contracts
   zkevm_use_gas_token_contract: false
   rollup_fork_id: 9
-  rollup_consensus: PolygonZkEVMEtrog
+  rollup_consensus: PolygonValidiumEtrog
   l2_chain_id: 10101
   l1_rpc_url: http://el-1-geth-lighthouse:8545
+  l1_ws_url: ws://el-1-geth-lighthouse:8546
   keystore_password: pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m
 
 erigon:
-  image: hermeznetwork/cdk-erigon:zkevm-58b66c2-amd64
+  image: hermeznetwork/cdk-erigon:20240703001110-e2ffe0b
+
+dac:
+  service_name: dac
+  image: 0xpolygon/cdk-data-availability:0.0.7
 
 ssender:
-  # image: hermeznetwork/zkevm-seqsender:v0.1.4-RC7
-  image: hermeznetwork/zkevm-sequence-sender:v0.2.0-RC4
+  service_name: ssender
+  image: hermeznetwork/zkevm-sequence-sender:v0.2.0-RC5
 
 aggregator:
-  image: hermeznetwork/zkevm-aggregator:v0.0.2-RC26
-  # image: hermeznetwork/zkevm-aggregator:v0.0.2-RC22
+  service_name: aggregator
+  # image: hermeznetwork/zkevm-aggregator:v0.0.2-RC33
+  image: hermeznetwork/zkevm-aggregator:v0.0.2-RC31
 
 mockprover:
-  image: hermeznetwork/zkevm-prover:v6.0.3-RC16
-
-# index:
-#   image: nginx
-#   public_port: 1337
+  service_name: mockprover
+  image: hermeznetwork/zkevm-prover:v6.0.3-RC18

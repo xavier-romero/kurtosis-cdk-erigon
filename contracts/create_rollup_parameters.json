@@ -2,6 +2,7 @@
     "adminZkEVM": "{{.admin.address}}",
     "chainID": {{.l2_chain_id}},
     "consensusContract": "{{.rollup_consensus}}",
+    "dataAvailabilityProtocol": "PolygonDataCommittee",
     "deployerPvtKey": "{{.admin.private_key}}",
     "description": "kurtosis-devnet",
     "forkID": {{.rollup_fork_id}},

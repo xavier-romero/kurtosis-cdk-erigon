@@ -18,6 +18,11 @@ DATABASES = {
         "user": "aggrsync_user",
         "password": "Qso5wMcLAN3oF7EfaawzgWKUUKWM3Vov",
     },
+    "dac_db": {
+        "name": "dac_db",
+        "user": "dac_user",
+        "password": "Qso5wMcLAN3oF7EfaawzgWKUUKWM3Vov",
+    },
 }
 
 

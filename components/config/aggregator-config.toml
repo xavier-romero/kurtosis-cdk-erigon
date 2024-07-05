@@ -10,10 +10,12 @@ SenderAddress = "{{.aggregator.address}}"
 CleanupLockedProofsInterval = "2m"
 GeneratingProofCleanupThreshold = "10m"
 ForkId = 9
+GasOffset = 0
 WitnessURL = "{{.sequencer_rpc_url}}"
 LERContract = "{{.ger_l2_address}}"
 UseL1BatchData = true
-UseFullWitness = true 
+UseFullWitness = false
+BatchProofSanityCheckEnabled = false
 	[Aggregator.DB]
 		Name = "{{.aggr_db.name}}"
 		User = "{{.aggr_db.user}}"
@@ -24,18 +26,15 @@ UseFullWitness = true
 		MaxConns = 200
 	[Aggregator.Log]
 		Environment = "development" # "production" or "development"
-		Level = "debug"
+		Level = "info"
 		Outputs = ["stderr"]
 	[Aggregator.StreamClient]
 		Server = "{{.sequencer_ds_url}}"
 	[Aggregator.EthTxManager]
-		SafeStatusL1NumberOfBlocks = 1
-		FinalizedStatusL1NumberOfBlocks = 1
 		FrequencyToMonitorTxs = "1s"
 		WaitTxToBeMined = "2m"
-		ConsolidationL1ConfirmationBlocks = 5
-		FinalizationL1ConfirmationBlocks = 10
-		WaitReceiptToBeGenerated = "8s"
+		GetReceiptMaxTime = "250ms"
+		GetReceiptWaitInterval = "1s"
 		PrivateKeys = [
 			{Path = "/config/aggregator.keystore", Password = "{{.keystore_password}}"},
 		]
@@ -43,6 +42,12 @@ UseFullWitness = true
 		GasPriceMarginFactor = 1
 		MaxGasPriceLimit = 0
 		PersistenceFilename = "/ethtxmanager_aggregator.json"
+		ReadPendingL1Txs = false
+		SafeStatusL1NumberOfBlocks = 1
+		FinalizedStatusL1NumberOfBlocks = 1
+#		ConsolidationL1ConfirmationBlocks = 5
+#		FinalizationL1ConfirmationBlocks = 10
+#		WaitReceiptToBeGenerated = "8s"
 			[Aggregator.EthTxManager.Etherman]
 				URL = "{{.l1_rpc_url}}"
 				L1ChainID = {{.l1_chain_id}}
@@ -62,3 +67,6 @@ UseFullWitness = true
 			GenesisBlockNumber = 1 
 			SyncUpToBlock = "latest"
 			BlockFinality = "latest"
+		[Aggregator.Synchronizer.Etherman]
+			[Aggregator.Synchronizer.Etherman.Validium]
+				Enabled = true

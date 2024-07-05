@@ -4,9 +4,10 @@ Level = "info"
 Outputs = ["stdout"]
 
 [SequenceSender]
-IsValidiumMode = false
+IsValidiumMode = true
 WaitPeriodSendSequence = "15s"
 LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
+L1BlockTimestampMargin = "120s"
 MaxTxSizeForL1 = 131072
 L2Coinbase =  "{{.sequencer.address}}"
 PrivateKey = {Path = "/config/sequencer.keystore", Password = "{{.keystore_password}}"}
@@ -14,14 +15,14 @@ SequencesTxFileName = "/tmp/sequencesender.json"
 GasOffset = 80000
 WaitPeriodPurgeTxFile = "48h"
 MaxPendingTx = 1
+MaxBatchesForL1 = 300
 	[SequenceSender.StreamClient]
 		Server = "{{.datastream_address}}"
 	[SequenceSender.EthTxManager]
 		FrequencyToMonitorTxs = "1s"
 		WaitTxToBeMined = "2m"
-		ConsolidationL1ConfirmationBlocks = 5
-		FinalizationL1ConfirmationBlocks = 10
-		WaitReceiptToBeGenerated = "8s"
+		GetReceiptMaxTime = "250ms"
+		GetReceiptWaitInterval = "1s"
 		PrivateKeys = [
 			{Path = "/config/sequencer.keystore", Password = "{{.keystore_password}}"},
 		]
@@ -29,6 +30,11 @@ MaxPendingTx = 1
 		GasPriceMarginFactor = 1
 		MaxGasPriceLimit = 0
 		PersistenceFilename = "/tmp/ethtxmanager.json"
+		ReadPendingL1Txs = false
+		# For both: 0 mean disabled (safe and finalized)
+		# Set to 1 for the min possible wait
+		SafeStatusL1NumberOfBlocks = 1
+		FinalizedStatusL1NumberOfBlocks = 1
 			[SequenceSender.EthTxManager.Etherman]
 				URL = "{{.l1_rpc_url}}"
 				MultiGasProvider = false

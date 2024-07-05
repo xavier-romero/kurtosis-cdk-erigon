@@ -65,7 +65,8 @@ def _get_genesis_params(plan):
 
 def _deploy_service(plan, cfg, service):
     service_ports = cfg[service]["PORTS"]
-    service_name = cfg[service]["NAME"]
+    service_name = cfg[service]["NAME"] + cfg["deployment_suffix"]
+    port_name = cfg[service]["NAME"]
     service_image = cfg[service]["IMAGE"]
     service_cmd = cfg[service]["CMD"]
     service_vars = cfg[service]["ENV_VARS"]
@@ -76,7 +77,7 @@ def _deploy_service(plan, cfg, service):
     service_config = ServiceConfig(
         image=service_image,
         ports={
-            "{}-{}".format(service_name, service_port): PortSpec(
+            "{}{}".format(port_name, service_port): PortSpec(
                 service_port, application_protocol="http", wait="20s"
             )
             for service_port in service_ports

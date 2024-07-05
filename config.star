@@ -1,3 +1,4 @@
+_PARAMS_FILE = "params.json"
 _RPC_HTTP_PORT = 8123
 _DAC_PORT = 8484
 _AGGR_PORT = 50081
@@ -15,7 +16,7 @@ def _get_erigon_config(cfg):
 
     ERIGON = {
         "SEQUENCER": {
-            "NAME": "erigon-sequencer",
+            "NAME": "sequencer",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
                 "--config",
@@ -27,7 +28,7 @@ def _get_erigon_config(cfg):
             },
         },
         "RPC": {
-            "NAME": "erigon-rpc",
+            "NAME": "rpc",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
                 "--config",
@@ -41,10 +42,13 @@ def _get_erigon_config(cfg):
 
 
 def get_config(args):
+    params = read_file(src=_PARAMS_FILE)
+    args = json.decode(params) | args
+
     cfg = {
-        "suffix": args.get("deployment_suffix")
-        and "-" + args["deployment_suffix"]
-        or "",
+        # "suffix": args.get("deployment_suffix")
+        # and "-" + args["deployment_suffix"]
+        # or "",
         "zkevm_rpc_http_port": _RPC_HTTP_PORT,
         "zkevm_dac_port": _DAC_PORT,
         "l1_funding_amount": _L1_FUNDING_AMOUNT,

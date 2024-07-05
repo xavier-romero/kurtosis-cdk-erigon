@@ -154,22 +154,22 @@ cast send \
 # The DAC needs to be configured with a required number of signatures.
 # Right now the number of DAC nodes is not configurable.
 # If we add more nodes, we'll need to make sure the urls and keys are sorted.
-# echo_ts "Setting the data availability committee"
-# cast send \
-#     --private-key "{{.admin.private_key}}" \
-#     --rpc-url "{{.l1_rpc_url}}" \
-#     "$(jq -r '.polygonDataCommitteeAddress' combined.json)" \
-#     'function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes) returns()' \
-#     1 ["http://zkevm-dac{{.suffix}}:{{.zkevm_dac_port}}"] "{{.dac.address}}"
+echo_ts "Setting the data availability committee"
+cast send \
+    --private-key "{{.admin.private_key}}" \
+    --rpc-url "{{.l1_rpc_url}}" \
+    "$(jq -r '.polygonDataCommitteeAddress' combined.json)" \
+    'function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes) returns()' \
+    1 ["{{.dac_url}}"] "{{.dac.address}}"
 
 # The DAC needs to be enabled with a call to set the DA protocol.
-# echo_ts "Setting the data availability protocol"
-# cast send \
-#     --private-key "{{.admin.private_key}}" \
-#     --rpc-url "{{.l1_rpc_url}}" \
-#     "$(jq -r '.rollupAddress' combined.json)" \
-#     'setDataAvailabilityProtocol(address)' \
-#     "$(jq -r '.polygonDataCommitteeAddress' combined.json)"
+echo_ts "Setting the data availability protocol"
+cast send \
+    --private-key "{{.admin.private_key}}" \
+    --rpc-url "{{.l1_rpc_url}}" \
+    "$(jq -r '.rollupAddress' combined.json)" \
+    'setDataAvailabilityProtocol(address)' \
+    "$(jq -r '.polygonDataCommitteeAddress' combined.json)"
 
 # Grant the aggregator role to the agglayer so that it can also verify batches.
 # cast keccak "TRUSTED_AGGREGATOR_ROLE"

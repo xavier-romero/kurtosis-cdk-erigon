@@ -27,6 +27,7 @@ ARTIFACTS_TO_SAVE = {
         "genesis.json",
         "sequencer.keystore",
         "aggregator.keystore",
+        "dac.keystore",
     ],
 }
 
@@ -42,7 +43,7 @@ def run(plan, cfg):
         artifacts.append(artifact)
 
     # Create helper service to deploy contracts
-    contracts_service_name = "contracts" + cfg["suffix"]
+    contracts_service_name = "contracts" + cfg["deployment_suffix"]
     zkevm_contracts_image = "{}:fork{}".format(cfg["image"], cfg["rollup_fork_id"])
     plan.add_service(
         name=contracts_service_name,
