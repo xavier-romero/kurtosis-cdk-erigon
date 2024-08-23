@@ -1,6 +1,7 @@
 config_package = "./config.star"
 contracts_package = "./contracts.star"
 ethereum_package = "./external/ethereum.star"
+executor_package = "./components/executor.star"
 erigon_package = "./components/erigon.star"
 databases_package = "./components/databases.star"
 aggregator_package = "./components/aggregator.star"
@@ -58,12 +59,24 @@ def run(plan, args):
     else:
         plan.print("Skipping the deployment of zkevm contracts on L1")
 
+    # Deploy executor
+    executor_config = cfg.get("executor")
+    if executor_config:
+        executor_config |= {
+            "deployment_suffix": cfg["deployment_suffix"],
+        }
+        import_module(executor_package).run(plan, executor_config)
+
     # Deploy Erigon
     erigon_config = (
         cfg.get("erigon")
         | cfg.get("addresses")
         | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
         | {"deployment_suffix": cfg.get("deployment_suffix")}
+        | {
+            "stateless_executor": cfg.get("executor").get("service_name")
+            + cfg.get("deployment_suffix")
+        }
     )
     if erigon_config:
         sequencer_service, rpc_service = import_module(erigon_package).run(

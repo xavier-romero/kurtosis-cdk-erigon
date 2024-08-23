@@ -15,7 +15,7 @@ WitnessURL = "{{.sequencer_rpc_url}}"
 LERContract = "{{.ger_l2_address}}"
 UseL1BatchData = true
 UseFullWitness = false
-BatchProofSanityCheckEnabled = false
+BatchProofSanityCheckEnabled = true
 	[Aggregator.DB]
 		Name = "{{.aggr_db.name}}"
 		User = "{{.aggr_db.user}}"

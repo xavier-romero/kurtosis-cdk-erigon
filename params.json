@@ -47,8 +47,12 @@
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "keystore_password": "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
   },
+  "executor": {
+    "service_name": "executor",
+    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC21"
+  },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:2.0.0-beta4"
+    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta17-a61220d-amd64"
   },
   "dac": {
     "service_name": "dac",
@@ -56,14 +60,14 @@
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0-RC5"
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0-RC10"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.2-RC34"
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.3-RC3"
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC18"
+    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC21"
   }
 }
