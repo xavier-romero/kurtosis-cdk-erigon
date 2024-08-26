@@ -4,7 +4,6 @@
     "chain_id": 271828,
     "preallocated_mnemonic": "code code code code code code code code code code code quality",
     "additional_services": [
-      "blockscout"
     ]
   },
   "addresses": {
@@ -64,10 +63,13 @@
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.3-RC3"
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.3-RC4"
   },
   "mockprover": {
     "service_name": "mockprover",
     "image": "hermeznetwork/zkevm-prover:v6.0.3-RC21"
+  },
+  "blockscout": {
+    "enabled": false
   }
 }

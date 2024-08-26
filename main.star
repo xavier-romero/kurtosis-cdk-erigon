@@ -160,14 +160,16 @@ def run(plan, args):
         import_module(mockprover_package).run(plan, mockprover_config)
 
     # Deploy L2 Blockscout
-    bs_config = {
-        "deployment_suffix": cfg["deployment_suffix"],
-        "l2_chain_id": cfg["contracts"]["l2_chain_id"],
-        "l2_rpc_url": "http://{}:{}".format(
-            sequencer_service.ip_address, cfg["sequencer_rpc_port"]
-        ),
-        "l2_ws_url": "ws://{}:{}".format(
-            sequencer_service.ip_address, cfg["sequencer_rpc_port"]
-        ),
-    }
-    import_module(blockscout_package).run(plan, bs_config)
+    bs_config = cfg.get("blockscout", {}).get("enabled")
+    if bs_config:
+        bs_config = {
+            "deployment_suffix": cfg["deployment_suffix"],
+            "l2_chain_id": cfg["contracts"]["l2_chain_id"],
+            "l2_rpc_url": "http://{}:{}".format(
+                sequencer_service.ip_address, cfg["sequencer_rpc_port"]
+            ),
+            "l2_ws_url": "ws://{}:{}".format(
+                sequencer_service.ip_address, cfg["sequencer_rpc_port"]
+            ),
+        }
+        import_module(blockscout_package).run(plan, bs_config)
