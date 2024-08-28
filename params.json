@@ -48,7 +48,7 @@
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC21"
+    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC25"
   },
   "erigon": {
     "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta17-a61220d-amd64"
@@ -67,7 +67,7 @@
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC21"
+    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC25"
   },
   "blockscout": {
     "enabled": false
