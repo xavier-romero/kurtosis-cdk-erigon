@@ -51,7 +51,7 @@
     "image": "hermeznetwork/zkevm-prover:v6.0.3-RC25"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-2dfde4f"
+    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-9050924"
   },
   "dac": {
     "service_name": "dac",
