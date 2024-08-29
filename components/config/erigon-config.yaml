@@ -28,7 +28,7 @@ zkevm.datastream-version: 2
 zkevm.data-stream-host: "127.0.0.1"
 # zkevm.sequencer-initial-fork-id: {{.fork_id}}
 zkevm.executor-strict: true
-zkevm.executor-urls: "{{.stateless_executor}}:50071"
+zkevm.executor-urls: "{{.stateless_executor}}:{{.executor_port}}"
 zkevm.witness-full: false
 zkevm.sequencer-block-seal-time: "3s"
 zkevm.sequencer-batch-seal-time: "12s"

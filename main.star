@@ -64,6 +64,7 @@ def run(plan, args):
     if executor_config:
         executor_config |= {
             "deployment_suffix": cfg["deployment_suffix"],
+            "executor_port": cfg["executor_port"],
         }
         import_module(executor_package).run(plan, executor_config)
 
@@ -72,10 +73,11 @@ def run(plan, args):
         cfg.get("erigon")
         | cfg.get("addresses")
         | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
-        | {"deployment_suffix": cfg.get("deployment_suffix")}
         | {
+            "deployment_suffix": cfg.get("deployment_suffix"),
             "stateless_executor": cfg.get("executor").get("service_name")
-            + cfg.get("deployment_suffix")
+            + cfg.get("deployment_suffix"),
+            "executor_port": cfg["executor_port"],
         }
     )
     if erigon_config:

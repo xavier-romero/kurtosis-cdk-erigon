@@ -5,6 +5,7 @@ _AGGR_PORT = 50081
 _L1_FUNDING_AMOUNT = "100ether"
 _SEQUENCER_RPC_PORT = 8123
 _SEQUENCER_DS_PORT = 6900
+_EXECUTOR_PORT = 50071
 
 
 def _get_erigon_config(cfg):
@@ -55,6 +56,7 @@ def get_config(args):
         "aggregator_port": _AGGR_PORT,
         "sequencer_rpc_port": _SEQUENCER_RPC_PORT,
         "sequencer_ds_port": _SEQUENCER_DS_PORT,
+        "executor_port": _EXECUTOR_PORT,
     }
     if args.get("erigon"):
         cfg["erigon"] = _get_erigon_config(args.get("erigon"))

@@ -21,6 +21,8 @@ def run(plan, cfg):
             artifact_names=[plan.get_files_artifact(EXECUTOR_CONFIG_FILE)]
         )
     }
+    service_port = cfg["executor_port"]
+    port_name = cfg["service_name"]
     service_cmd = [
         "zkProver",
         "-c",
@@ -29,6 +31,11 @@ def run(plan, cfg):
 
     service_config = ServiceConfig(
         image=service_image,
+        ports={
+            "{}{}".format(port_name, service_port): PortSpec(
+                service_port, application_protocol="http", wait="20s"
+            )
+        },
         files=service_files,
         cmd=service_cmd,
     )

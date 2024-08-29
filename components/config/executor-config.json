@@ -46,9 +46,9 @@
     "proverClientPort": 50051,
     "proverClientHost": "127.0.0.1",
 
-    "executorServerPort": 50071,
+    "executorServerPort": {{.executor_port}},
     "executorROMLineTraces": false,
-    "executorClientPort": 50071,
+    "executorClientPort": {{.executor_port}},
     "executorClientHost": "127.0.0.1",
 
     "hashDBServerPort": 50061,
