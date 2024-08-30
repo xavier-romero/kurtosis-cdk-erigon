@@ -88,6 +88,7 @@
     "ECRecoverPrecalc": false,
     "ECRecoverPrecalcNThreads": 8,
     "stateManager": false,
-    "useAssociativeCache" : false,
-    "jsonLogs": false
+    "useAssociativeCache": false,
+    "jsonLogs": false,
+    "hashDBSingleton": false
 }
