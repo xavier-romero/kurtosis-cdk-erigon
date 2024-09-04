@@ -48,10 +48,10 @@
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC26"
+    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC27"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-4786c47"
+    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-bde1b5e"
   },
   "dac": {
     "service_name": "dac",
