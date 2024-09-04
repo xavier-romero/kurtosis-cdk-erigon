@@ -39,7 +39,7 @@
   "contracts": {
     "image": "leovct/zkevm-contracts",
     "zkevm_use_gas_token_contract": false,
-    "rollup_fork_id": 9,
+    "rollup_fork_id": 11,
     "rollup_consensus": "PolygonValidiumEtrog",
     "l2_chain_id": 10101,
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
@@ -48,7 +48,7 @@
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC27"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC30-fork.11"
   },
   "erigon": {
     "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-bde1b5e"
@@ -67,7 +67,7 @@
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v6.0.3-RC27"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC30-fork.11"
   },
   "blockscout": {
     "enabled": false

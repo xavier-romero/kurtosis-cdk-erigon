@@ -143,6 +143,7 @@ def run(plan, args):
                 ),
                 "keystore_password": cfg["contracts"]["keystore_password"],
                 "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                "rollup_fork_id": cfg["contracts"]["rollup_fork_id"],
                 "l1_chain_id": cfg["l1"]["chain_id"],
                 "deployment_suffix": cfg.get("deployment_suffix"),
             }
