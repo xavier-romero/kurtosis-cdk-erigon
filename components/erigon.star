@@ -73,6 +73,7 @@ def _deploy_service(plan, cfg, service):
 
     cfg_filename = cfg["COMMON"]["CONFIG_FILE"]
     cfg_path = cfg["COMMON"]["CONFIG_PATH"]
+    datadir_path = cfg["COMMON"]["DATADIR_PATH"]
 
     service_config = ServiceConfig(
         image=service_image,
@@ -91,7 +92,10 @@ def _deploy_service(plan, cfg, service):
                     plan.get_files_artifact("erigon-dynamic-cdk-conf"),
                     plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
                 ]
-            )
+            ),
+            datadir_path: Directory(
+                persistent_key="erigon-{}-datadir".format(service_name.lower())
+            ),
             # cfg_path: plan.get_files_artifact("erigon-" + service + "-" + cfg_filename),
             # "/etc/erigon/dynamic-configs": Directory(
             #     artifact_names=[
@@ -100,7 +104,6 @@ def _deploy_service(plan, cfg, service):
             #         plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
             #     ]
             # ),
-            # "/datadir": Directory(persistent_key="erigon-{}-datadir".format(service.lower())),
         },
         cmd=service_cmd,
         # Temporary solution to avoid permission issues on datadir
