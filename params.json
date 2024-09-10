@@ -3,8 +3,9 @@
   "l1": {
     "chain_id": 271828,
     "preallocated_mnemonic": "code code code code code code code code code code code quality",
-    "additional_services": [
-    ]
+    "seconds_per_slot": 1,
+    "preset": "minimal",
+    "additional_services": []
   },
   "addresses": {
     "sequencer": {

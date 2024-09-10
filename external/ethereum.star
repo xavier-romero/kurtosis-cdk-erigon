@@ -30,6 +30,8 @@ def run(plan, cfg):
                 # The ethereum package requires the network id to be a string.
                 "network_id": str(cfg["chain_id"]),
                 "preregistered_validator_keys_mnemonic": cfg["preallocated_mnemonic"],
+                "seconds_per_slot": cfg["seconds_per_slot"],
+                "preset": cfg["preset"],
             },
             "additional_services": cfg["additional_services"],
         },
