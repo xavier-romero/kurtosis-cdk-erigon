@@ -31,7 +31,7 @@ def run(plan, cfg):
     cpu_arch = cpu_arch_result.output
 
     service_cmd = [
-        '[[ "{0}" == "aarch64" || "{0}" == "arm64" ]] && export EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1;'.format(cpu_arch),
+        '[[ "{0}" == "aarch64" || "{0}" == "arm64" ]] && export EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1; '.format(cpu_arch),
         "zkProver",
         "-c",
         "/config/" + EXECUTOR_CONFIG_FILE,
