@@ -52,7 +52,7 @@
     "image": "hermeznetwork/zkevm-prover:v7.0.0-RC31-fork.11"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:zkevm-b6bf23b-amd64"
+    "image": "hermeznetwork/cdk-erigon:zkevm-b6bf23b"
   },
   "dac": {
     "service_name": "dac",
