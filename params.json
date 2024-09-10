@@ -5,7 +5,8 @@
     "preallocated_mnemonic": "code code code code code code code code code code code quality",
     "seconds_per_slot": 1,
     "preset": "minimal",
-    "additional_services": []
+    "additional_services": [
+    ]
   },
   "addresses": {
     "sequencer": {
