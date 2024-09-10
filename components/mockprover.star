@@ -27,17 +27,14 @@ def run(plan, cfg):
         run="uname -m | tr -d '\n'",
     )
     cpu_arch = cpu_arch_result.output
-
     service_cmd = [
-        '[[ "{0}" == "aarch64" || "{0}" == "arm64" ]] && export EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1; '.format(cpu_arch),
-        "zkProver",
-        "-c",
-        "/config/" + MOCKPROVER_CONFIG_FILE,
+        '[[ "{0}" == "aarch64" || "{0}" == "arm64" ]] && export EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1; zkProver -c /config/{1}'.format(cpu_arch, MOCKPROVER_CONFIG_FILE),
     ]
 
     service_config = ServiceConfig(
         image=service_image,
         files=service_files,
+        entrypoint=["/bin/bash", "-c"],
         cmd=service_cmd,
     )
 
