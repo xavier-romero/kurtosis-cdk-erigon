@@ -24,6 +24,7 @@ ARTIFACTS_TO_SAVE = {
     # These files are used from erigon._generate_dynamic_files, ssender, aggregator
     "files": [
         "create_rollup_output.json",
+        "deploy_output.json",
         "genesis.json",
         "sequencer.keystore",
         "aggregator.keystore",

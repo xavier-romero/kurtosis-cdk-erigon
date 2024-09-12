@@ -55,8 +55,8 @@ def _get_genesis_params(plan):
         genesis_params[k] = result.output.strip()
 
     result = plan.run_sh(
-        run="jq -j .createRollupBlockNumber /input/create_rollup_output.json",
-        files={"/input": plan.get_files_artifact("create_rollup_output.json")},
+        run="jq -j .deploymentRollupManagerBlockNumber /input/deploy_output.json",
+        files={"/input": plan.get_files_artifact("deploy_output.json")},
     )
     genesis_params["rollupBlockNumber"] = result.output.strip()
 
