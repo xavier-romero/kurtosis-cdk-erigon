@@ -57,7 +57,7 @@
   },
   "dac": {
     "service_name": "dac",
-    "image": "0xpolygon/cdk-data-availability:0.0.7"
+    "image": "0xpolygon/cdk-data-availability:0.0.9"
   },
   "ssender": {
     "service_name": "ssender",
