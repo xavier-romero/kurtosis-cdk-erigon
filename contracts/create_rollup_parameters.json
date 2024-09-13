@@ -1,9 +1,10 @@
 {
     "adminZkEVM": "{{.admin.address}}",
     "chainID": {{.l2_chain_id}},
-    "consensusContract": "{{.rollup_consensus}}",
+    {{if .validium}}"consensusContract": "PolygonValidiumEtrog",
     "dataAvailabilityProtocol": "PolygonDataCommittee",
-    "deployerPvtKey": "{{.admin.private_key}}",
+    {{else}}"consensusContract": "PolygonZkEVMEtrog",
+    {{end}}"deployerPvtKey": "{{.admin.private_key}}",
     "description": "kurtosis-devnet",
     "forkID": {{.rollup_fork_id}},
     "gasTokenAddress":"",

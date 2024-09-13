@@ -42,7 +42,7 @@
     "image": "leovct/zkevm-contracts",
     "zkevm_use_gas_token_contract": false,
     "rollup_fork_id": 11,
-    "rollup_consensus": "PolygonValidiumEtrog",
+    "validium": false,
     "l2_chain_id": 10101,
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
@@ -50,10 +50,10 @@
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC31-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:zkevm-b6bf23b"
+    "image": "hermeznetwork/cdk-erigon:v2.0.0-beta18"
   },
   "dac": {
     "service_name": "dac",
@@ -61,15 +61,15 @@
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0-RC11"
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.3-RC4"
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC31-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
   },
   "blockscout": {
     "enabled": false
