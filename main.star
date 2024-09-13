@@ -53,6 +53,8 @@ def run(plan, args):
                 ),
                 "deployment_suffix": cfg["deployment_suffix"],
                 "l1_funding_amount": cfg["l1_funding_amount"],
+                "suffix": cfg["deployment_suffix"],
+                "sequencer_rpc_port": cfg["sequencer_rpc_port"],
             }
         )
         plan.print("Deploying zkevm contracts on L1")

@@ -14,7 +14,7 @@
     "networkName": "kurtosis-test",
     "realVerifier": "false",
     "trustedSequencer": "{{.sequencer.address}}",
-    "trustedSequencerURL": "http://zkevm-node-sequencer{{.suffix}}:{{.zkevm_rpc_http_port}}",
+    "trustedSequencerURL": "http://sequencer{{.suffix}}:{{.sequencer_rpc_port}}",
     "trustedAggregator":"{{.aggregator.address}}"
 }
 
