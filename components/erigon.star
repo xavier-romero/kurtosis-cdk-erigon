@@ -55,8 +55,8 @@ def _get_genesis_params(plan):
         genesis_params[k] = result.output.strip()
 
     result = plan.run_sh(
-        run="jq -j .createRollupBlockNumber /input/create_rollup_output.json",
-        files={"/input": plan.get_files_artifact("create_rollup_output.json")},
+        run="jq -j .deploymentRollupManagerBlockNumber /input/deploy_output.json",
+        files={"/input": plan.get_files_artifact("deploy_output.json")},
     )
     genesis_params["rollupBlockNumber"] = result.output.strip()
 
@@ -73,6 +73,7 @@ def _deploy_service(plan, cfg, service):
 
     cfg_filename = cfg["COMMON"]["CONFIG_FILE"]
     cfg_path = cfg["COMMON"]["CONFIG_PATH"]
+    datadir_path = cfg["COMMON"]["DATADIR_PATH"]
 
     service_config = ServiceConfig(
         image=service_image,
@@ -91,7 +92,10 @@ def _deploy_service(plan, cfg, service):
                     plan.get_files_artifact("erigon-dynamic-cdk-conf"),
                     plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
                 ]
-            )
+            ),
+            datadir_path: Directory(
+                persistent_key="erigon-{}-datadir".format(service_name.lower())
+            ),
             # cfg_path: plan.get_files_artifact("erigon-" + service + "-" + cfg_filename),
             # "/etc/erigon/dynamic-configs": Directory(
             #     artifact_names=[
@@ -100,7 +104,6 @@ def _deploy_service(plan, cfg, service):
             #         plan.get_files_artifact("erigon-dynamic-cdk-chainspec"),
             #     ]
             # ),
-            # "/datadir": Directory(persistent_key="erigon-{}-datadir".format(service.lower())),
         },
         cmd=service_cmd,
         # Temporary solution to avoid permission issues on datadir

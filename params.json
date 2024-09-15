@@ -3,6 +3,8 @@
   "l1": {
     "chain_id": 271828,
     "preallocated_mnemonic": "code code code code code code code code code code code quality",
+    "seconds_per_slot": 1,
+    "preset": "minimal",
     "additional_services": [
     ]
   },
@@ -40,7 +42,7 @@
     "image": "leovct/zkevm-contracts",
     "zkevm_use_gas_token_contract": false,
     "rollup_fork_id": 11,
-    "rollup_consensus": "PolygonValidiumEtrog",
+    "validium": false,
     "l2_chain_id": 10101,
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
@@ -58,15 +60,15 @@
   },
   "dac": {
     "service_name": "dac",
-    "image": "0xpolygon/cdk-data-availability:0.0.7"
+    "image": "0xpolygon/cdk-data-availability:0.0.9"
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0"
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.1-RC1"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.3"
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
   },
   "mockprover": {
     "service_name": "mockprover",

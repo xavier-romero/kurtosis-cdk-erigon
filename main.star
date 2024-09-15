@@ -45,6 +45,7 @@ def run(plan, args):
         contracts_config = (
             contracts_config
             | addresses
+            # Wont be used if not Validium, no need to remove:
             | {
                 "dac_url": "http://{}:{}".format(
                     cfg["dac"]["service_name"] + cfg["deployment_suffix"],
@@ -52,6 +53,8 @@ def run(plan, args):
                 ),
                 "deployment_suffix": cfg["deployment_suffix"],
                 "l1_funding_amount": cfg["l1_funding_amount"],
+                "suffix": cfg["deployment_suffix"],
+                "sequencer_rpc_port": cfg["sequencer_rpc_port"],
             }
         )
         plan.print("Deploying zkevm contracts on L1")
@@ -80,29 +83,30 @@ def run(plan, args):
             "executor_port": cfg["executor_port"],
         }
     )
-    if erigon_config:
-        sequencer_service, rpc_service = import_module(erigon_package).run(
-            plan, erigon_config
-        )
-    else:
-        plan.print("Skipping the deployment of Erigon")
+    sequencer_service, rpc_service = import_module(erigon_package).run(
+        plan, erigon_config
+    )
+    l2_rpc_url = "http://{}:{}".format(
+        sequencer_service.ip_address, cfg["sequencer_rpc_port"]
+    )
 
-    # Deploy DAC
-    dac_config = cfg.get("dac")
-    if dac_config:
-        dac_config = (
-            dac_config
-            | db_configs
-            | cfg.get("addresses")
-            | {
-                "dac_port": cfg["zkevm_dac_port"],
-                "keystore_password": cfg["contracts"]["keystore_password"],
-                "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
-                "l1_ws_url": cfg["contracts"]["l1_ws_url"],
-                "deployment_suffix": cfg.get("deployment_suffix"),
-            }
-        )
-        dac_service = import_module(dac_package).run(plan, dac_config)
+    if contracts_config.get("validium"):
+        # Deploy DAC
+        dac_config = cfg.get("dac")
+        if dac_config:
+            dac_config = (
+                dac_config
+                | db_configs
+                | cfg.get("addresses")
+                | {
+                    "dac_port": cfg["zkevm_dac_port"],
+                    "keystore_password": cfg["contracts"]["keystore_password"],
+                    "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                    "l1_ws_url": cfg["contracts"]["l1_ws_url"],
+                    "deployment_suffix": cfg.get("deployment_suffix"),
+                }
+            )
+            dac_service = import_module(dac_package).run(plan, dac_config)
 
     # Deploy sequence-sender
     ssender_config = cfg.get("ssender")
@@ -118,6 +122,8 @@ def run(plan, args):
             | {
                 "keystore_password": cfg["contracts"]["keystore_password"],
                 "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                "l2_rpc_url": l2_rpc_url,
+                "is_validium": contracts_config.get("validium"),
                 "l1_chain_id": cfg["l1"]["chain_id"],
                 "datastream_address": "{}:{}".format(
                     sequencer_service.ip_address, cfg["sequencer_ds_port"]
@@ -144,6 +150,7 @@ def run(plan, args):
                 "keystore_password": cfg["contracts"]["keystore_password"],
                 "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
                 "rollup_fork_id": cfg["contracts"]["rollup_fork_id"],
+                "is_validium": contracts_config.get("validium"),
                 "l1_chain_id": cfg["l1"]["chain_id"],
                 "deployment_suffix": cfg.get("deployment_suffix"),
             }
@@ -168,9 +175,7 @@ def run(plan, args):
         bs_config = {
             "deployment_suffix": cfg["deployment_suffix"],
             "l2_chain_id": cfg["contracts"]["l2_chain_id"],
-            "l2_rpc_url": "http://{}:{}".format(
-                sequencer_service.ip_address, cfg["sequencer_rpc_port"]
-            ),
+            "l2_rpc_url": l2_rpc_url,
             "l2_ws_url": "ws://{}:{}".format(
                 sequencer_service.ip_address, cfg["sequencer_rpc_port"]
             ),

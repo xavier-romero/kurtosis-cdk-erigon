@@ -69,4 +69,4 @@ BatchProofSanityCheckEnabled = true
 			BlockFinality = "latest"
 		[Aggregator.Synchronizer.Etherman]
 			[Aggregator.Synchronizer.Etherman.Validium]
-				Enabled = true
+				Enabled = {{.is_validium}}

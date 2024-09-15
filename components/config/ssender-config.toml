@@ -4,7 +4,7 @@ Level = "info"
 Outputs = ["stdout"]
 
 [SequenceSender]
-IsValidiumMode = true
+IsValidiumMode = {{.is_validium}}
 WaitPeriodSendSequence = "15s"
 LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
 L1BlockTimestampMargin = "120s"
@@ -16,6 +16,7 @@ GasOffset = 80000
 WaitPeriodPurgeTxFile = "48h"
 MaxPendingTx = 1
 MaxBatchesForL1 = 300
+SanityCheckRPCURL = "{{.l2_rpc_url}}"
 	[SequenceSender.StreamClient]
 		Server = "{{.datastream_address}}"
 	[SequenceSender.EthTxManager]

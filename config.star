@@ -12,6 +12,7 @@ def _get_erigon_config(cfg):
     ERIGON_COMMON = {
         "IMAGE": cfg.get("image"),
         "CONFIG_PATH": "/etc/erigon",
+        "DATADIR_PATH": "/datadir",
         "CONFIG_FILE": "config.yaml",
     }
 
