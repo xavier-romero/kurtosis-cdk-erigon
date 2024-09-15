@@ -48,10 +48,13 @@
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC30-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-bde1b5e"
+      "// image": "hermeznetwork/cdk-erigon:acceptance-2.0.0-beta18-bde1b5e",
+      "// image": "hermeznetwork/cdk-erigon:zkevm-b6bf23b-amd64",
+      "// image": "hermeznetwork/cdk-erigon:2.0.0-RC1-62033e5",
+      "image": "hermeznetwork/cdk-erigon:v2.0.0-beta18"
   },
   "dac": {
     "service_name": "dac",
@@ -59,15 +62,15 @@
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0-RC10"
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.3-RC4"
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.3"
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-RC30-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
   },
   "blockscout": {
     "enabled": false

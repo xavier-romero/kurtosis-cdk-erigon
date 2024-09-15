@@ -17,7 +17,7 @@ brew install kurtosis-tech/tap/kurtosis-cli
 
 deploy cdk-erigon devnet:
 ```bash
-kurtosis run --enclave erigon --args-file params.yml --image-download always .
+kurtosis run --enclave erigon02 --image-download always .
 ```
 
 destroy cdk-erigon devnet:
