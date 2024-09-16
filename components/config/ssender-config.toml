@@ -18,7 +18,7 @@ MaxPendingTx = 1
 MaxBatchesForL1 = 300
 SanityCheckRPCURL = "{{.l2_rpc_url}}"
 	[SequenceSender.StreamClient]
-		Server = "{{.datastream_address}}"
+		Server = "{{.ds_url}}"
 	[SequenceSender.EthTxManager]
 		FrequencyToMonitorTxs = "1s"
 		WaitTxToBeMined = "2m"

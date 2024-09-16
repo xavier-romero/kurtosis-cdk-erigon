@@ -11,7 +11,7 @@ CleanupLockedProofsInterval = "2m"
 GeneratingProofCleanupThreshold = "10m"
 ForkId = {{.rollup_fork_id}}
 GasOffset = 0
-WitnessURL = "{{.sequencer_rpc_url}}"
+WitnessURL = "{{.l2_rpc_url}}"
 LERContract = "{{.ger_l2_address}}"
 UseL1BatchData = true
 UseFullWitness = false
@@ -29,7 +29,7 @@ BatchProofSanityCheckEnabled = true
 		Level = "info"
 		Outputs = ["stderr"]
 	[Aggregator.StreamClient]
-		Server = "{{.sequencer_ds_url}}"
+		Server = "{{.ds_url}}"
 	[Aggregator.EthTxManager]
 		FrequencyToMonitorTxs = "1s"
 		WaitTxToBeMined = "2m"

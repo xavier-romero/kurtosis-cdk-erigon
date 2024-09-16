@@ -87,6 +87,9 @@ def run(plan, args):
         plan, erigon_config
     )
     l2_rpc_url = "http://{}:{}".format(
+        rpc_service.ip_address, cfg["sequencer_rpc_port"]
+    )
+    l2_seq_url = "http://{}:{}".format(
         sequencer_service.ip_address, cfg["sequencer_rpc_port"]
     )
 
@@ -114,20 +117,29 @@ def run(plan, args):
         plan.exec(
             description="Allowing time for Sequencer DS to avoid SequenceSender failure",
             service_name="foo" + cfg["deployment_suffix"],
-            recipe=ExecRecipe(command=["sleep", "30"]),
+            recipe=ExecRecipe(command=["sleep", "20"]),
         )
+        ds_url = "{}:{}".format(
+            # port specified as sequencer_ds_port for both services
+            rpc_service.ip_address,
+            cfg["sequencer_ds_port"],
+        )
+        rpc_url = l2_rpc_url
+        if ssender_config.get("read_from_sequencer"):
+            ds_url = "{}:{}".format(
+                sequencer_service.ip_address, cfg["sequencer_ds_port"]
+            )
+            rpc_url = l2_seq_url
         ssender_config = (
             ssender_config
             | cfg.get("addresses")
             | {
                 "keystore_password": cfg["contracts"]["keystore_password"],
                 "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
-                "l2_rpc_url": l2_rpc_url,
+                "l2_rpc_url": rpc_url,
                 "is_validium": contracts_config.get("validium"),
                 "l1_chain_id": cfg["l1"]["chain_id"],
-                "datastream_address": "{}:{}".format(
-                    sequencer_service.ip_address, cfg["sequencer_ds_port"]
-                ),
+                "ds_url": ds_url,
                 "deployment_suffix": cfg.get("deployment_suffix"),
             }
         )
@@ -135,20 +147,27 @@ def run(plan, args):
 
     aggregator_config = cfg.get("aggregator")
     if aggregator_config:
+        ds_url = "{}:{}".format(
+            # port specified as sequencer_ds_port for both services
+            rpc_service.ip_address,
+            cfg["sequencer_ds_port"],
+        )
+        rpc_url = l2_rpc_url
+        if aggregator_config.get("read_from_sequencer"):
+            ds_url = "{}:{}".format(
+                sequencer_service.ip_address, cfg["sequencer_ds_port"]
+            )
+            rpc_url = l2_seq_url
         aggregator_config = (
             aggregator_config
             | db_configs
             | cfg.get("addresses")
             | {
                 "aggregator_port": cfg["aggregator_port"],
-                "sequencer_rpc_url": "http://{}:{}".format(
-                    sequencer_service.ip_address, cfg["sequencer_rpc_port"]
-                ),
-                "sequencer_ds_url": "{}:{}".format(
-                    sequencer_service.ip_address, cfg["sequencer_ds_port"]
-                ),
+                "ds_url": ds_url,
                 "keystore_password": cfg["contracts"]["keystore_password"],
                 "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                "l2_rpc_url": rpc_url,
                 "rollup_fork_id": cfg["contracts"]["rollup_fork_id"],
                 "is_validium": contracts_config.get("validium"),
                 "l1_chain_id": cfg["l1"]["chain_id"],
