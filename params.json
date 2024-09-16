@@ -39,12 +39,13 @@
     }
   },
   "contracts": {
-    "image": "leovct/zkevm-contracts",
-    "zkevm_use_gas_token_contract": false,
-    "rollup_fork_id": 11,
-    "validium": false,
-    "l2_chain_id": 10101,
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
+    "rollup_fork_id": 11,
+    "l2_chain_id": 10101,
+    "validium": false,
+    "image": "xavierromero/cdk-sc-deployer:latest",
+
+    "zkevm_use_gas_token_contract": false,
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "keystore_password": "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
   },
