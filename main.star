@@ -126,7 +126,7 @@ def run(plan, args):
                 "is_validium": contracts_config.get("validium"),
                 "l1_chain_id": cfg["l1"]["chain_id"],
                 "datastream_address": "{}:{}".format(
-                    sequencer_service.ip_address, cfg["sequencer_ds_port"]
+                    "rpc001", cfg["sequencer_ds_port"]
                 ),
                 "deployment_suffix": cfg.get("deployment_suffix"),
             }
