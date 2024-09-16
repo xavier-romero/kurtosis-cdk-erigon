@@ -46,9 +46,23 @@ def run(plan, args):
             contracts_config
             | addresses
             | {
-                'l1_funded_mnemonic': cfg.get('l1').get('preallocated_mnemonic'),
-                'l1_funding_amount': cfg.get('l1_funding_amount'),
+                "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
+                "l1_funding_amount": cfg.get("l1_funding_amount"),
                 "suffix": cfg["deployment_suffix"],
+                "extra": {
+                    "executor_port": cfg["executor_port"],
+                    "seq_rpc": "http://{}:{}".format(
+                        cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
+                        cfg["sequencer_rpc_port"],
+                    ),
+                    "seq_ds": "{}:{}".format(
+                        cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
+                        cfg["sequencer_ds_port"],
+                    ),
+                    "stateless_executor": cfg["executor"]["service_name"] + cfg["deployment_suffix"],
+                    "sequencer_rpc_port": cfg["sequencer_rpc_port"],
+                    "sequencer_ds_port": cfg["sequencer_ds_port"],
+                },
             }
             # Wont be used if not Validium, no need to remove:
             # | {
@@ -66,30 +80,30 @@ def run(plan, args):
     else:
         plan.print("Skipping the deployment of zkevm contracts on L1")
 
-    # # Deploy executor
-    # executor_config = cfg.get("executor")
-    # if executor_config:
-    #     executor_config |= {
-    #         "deployment_suffix": cfg["deployment_suffix"],
-    #         "executor_port": cfg["executor_port"],
-    #     }
-    #     import_module(executor_package).run(plan, executor_config)
+    # Deploy executor
+    executor_config = cfg.get("executor")
+    if executor_config:
+        executor_config |= {
+            "deployment_suffix": cfg["deployment_suffix"],
+            "executor_port": cfg["executor_port"],
+        }
+        import_module(executor_package).run(plan, executor_config)
 
-    # # Deploy Erigon
-    # erigon_config = (
-    #     cfg.get("erigon")
-    #     | cfg.get("addresses")
-    #     | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
-    #     | {
-    #         "deployment_suffix": cfg.get("deployment_suffix"),
-    #         "stateless_executor": cfg.get("executor").get("service_name")
-    #         + cfg.get("deployment_suffix"),
-    #         "executor_port": cfg["executor_port"],
-    #     }
-    # )
-    # sequencer_service, rpc_service = import_module(erigon_package).run(
-    #     plan, erigon_config
-    # )
+    # Deploy Erigon
+    erigon_config = (
+        cfg.get("erigon")
+        | cfg.get("addresses")
+        | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
+        | {
+            "deployment_suffix": cfg.get("deployment_suffix"),
+            "stateless_executor": cfg.get("executor").get("service_name")
+            + cfg.get("deployment_suffix"),
+            "executor_port": cfg["executor_port"],
+        }
+    )
+    sequencer_service, rpc_service = import_module(erigon_package).run(
+        plan, erigon_config
+    )
     # l2_rpc_url = "http://{}:{}".format(
     #     rpc_service.ip_address, cfg["sequencer_rpc_port"]
     # )

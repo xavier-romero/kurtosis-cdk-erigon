@@ -13,7 +13,6 @@ def _get_erigon_config(cfg):
         "IMAGE": cfg.get("image"),
         "CONFIG_PATH": "/etc/erigon",
         "DATADIR_PATH": "/datadir",
-        "CONFIG_FILE": "config.yaml",
     }
 
     ERIGON = {
@@ -22,7 +21,7 @@ def _get_erigon_config(cfg):
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
                 "--config",
-                ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
+                ERIGON_COMMON["CONFIG_PATH"] + "/erigon-sequencer.yaml",
             ],
             "PORTS": [_SEQUENCER_RPC_PORT, _SEQUENCER_DS_PORT],
             "ENV_VARS": {
@@ -34,7 +33,7 @@ def _get_erigon_config(cfg):
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
                 "--config",
-                ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
+                ERIGON_COMMON["CONFIG_PATH"] + "/erigon-rpc.yaml",
             ],
             "PORTS": [_SEQUENCER_RPC_PORT, _SEQUENCER_DS_PORT],
             "ENV_VARS": {},

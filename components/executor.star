@@ -1,19 +1,7 @@
-EXECUTOR_CONFIG_TEMPLATE = "./config/executor-config.json"
 EXECUTOR_CONFIG_FILE = "executor-config.json"
 
 
-def _gen_config_file(plan, cfg):
-    cfg_file_tpl = read_file(src=EXECUTOR_CONFIG_TEMPLATE)
-
-    plan.render_templates(
-        name=EXECUTOR_CONFIG_FILE,
-        config={EXECUTOR_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg)},
-    )
-
-
 def run(plan, cfg):
-    _gen_config_file(plan, cfg)
-
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]
     service_files = {
