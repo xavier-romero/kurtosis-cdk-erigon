@@ -17,7 +17,6 @@ ARTIFACTS_TO_SAVE = {
         "dynamic-kurtosis-allocs.json",
         "dynamic-kurtosis-conf.json",
         "dynamic-kurtosis-chainspec.json",
-        "kurtosis-chainspec.json",
         "mockprover-config.json",
         "sequencer.keystore",
         "ssender-config.toml",
@@ -46,8 +45,8 @@ def run(plan, cfg):
                 "L2_CHAIN_ID": str(cfg["l2_chain_id"]),
                 "IS_VALIDIUM": "1" if cfg.get("validium") else "0",
                 "L1_FUND_AMOUNT": str(cfg["l1_funding_amount"]),
-                "JSON_EXTRA_PARAMS": json.encode(cfg.get("extra", {}))
-            }
+                "JSON_EXTRA_PARAMS": json.encode(cfg.get("extra", {})),
+            },
         ),
     )
     plan.exec(

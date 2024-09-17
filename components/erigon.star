@@ -25,7 +25,6 @@ def _deploy_service(plan, cfg, service):
                     plan.get_files_artifact("dynamic-kurtosis-allocs.json"),
                     plan.get_files_artifact("dynamic-kurtosis-conf.json"),
                     plan.get_files_artifact("dynamic-kurtosis-chainspec.json"),
-                    plan.get_files_artifact("kurtosis-chainspec.json"),
                 ]
             ),
             datadir_path: Directory(
@@ -49,32 +48,9 @@ def _deploy_service(plan, cfg, service):
 
 def run(plan, cfg):
     plan.print("Deploying Erigon Sequencer")
-    # service = "SEQUENCER"
-    # sequencer_cfg = (
-    #     cfg
-    #     # | gen_params
-    #     # | {
-    #     #     "seq_rpc": "http://127.0.0.1:{}".format(cfg["sequencer_rpc_port"]),
-    #     #     "seq_ds": "127.0.0.1:{}".format(cfg["sequencer_ds_port"]),
-    #     # }
-    # )
-    # _generate_config_file(plan, sequencer_cfg, service)
     sequencer_service = _deploy_service(plan, cfg, "SEQUENCER")
 
-    # return sequencer_service, sequencer_service
-
     plan.print("Deploying Erigon RPC")
-    # service = "RPC"
-    # sequencer_rpc = "http://{}:{}".format(
-    #     sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][0]
-    # )
-    # sequencer_ds = "{}:{}".format(
-    #     sequencer_service.ip_address, cfg["SEQUENCER"]["PORTS"][1]
-    # )
-    # plan.print("Sequencer RPC: {}".format(sequencer_rpc))
-    # plan.print("Sequencer DS: {}".format(sequencer_ds))
-    # rpc_cfg = cfg | gen_params | {"seq_rpc": sequencer_rpc, "seq_ds": sequencer_ds}
-    # _generate_config_file(plan, rpc_cfg, service)
     rpc_service = _deploy_service(plan, cfg, "RPC")
 
     return sequencer_service, rpc_service

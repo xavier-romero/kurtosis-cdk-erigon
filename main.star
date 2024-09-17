@@ -40,8 +40,6 @@ def run(plan, args):
         addresses = cfg.get("addresses")
         if not addresses:
             fail("Missing addresses for zkevm contracts")
-        # for k, v in l1_config.items():
-        #     contracts_config["l1_" + k] = v
         contracts_config = (
             contracts_config
             | addresses
@@ -51,17 +49,22 @@ def run(plan, args):
                 "suffix": cfg["deployment_suffix"],
                 "extra": {
                     "executor_port": cfg["executor_port"],
-                    "seq_rpc": "http://{}:{}".format(
+                    "sequencer_rpc": "http://{}:{}".format(
                         cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
                         cfg["sequencer_rpc_port"],
                     ),
-                    "seq_ds": "{}:{}".format(
+                    "sequencer_ds": "{}:{}".format(
                         cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
                         cfg["sequencer_ds_port"],
                     ),
-                    "stateless_executor": cfg["executor"]["service_name"] + cfg["deployment_suffix"],
+                    "stateless_executor": cfg["executor"]["service_name"]
+                    + cfg["deployment_suffix"],
                     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                     "sequencer_ds_port": cfg["sequencer_ds_port"],
+                    "datastream_addr": "{}:{}".format(
+                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
+                        cfg["sequencer_ds_port"],
+                    ),
                 },
             }
             # Wont be used if not Validium, no need to remove:
@@ -92,13 +95,13 @@ def run(plan, args):
     # Deploy Erigon
     erigon_config = (
         cfg.get("erigon")
-        | cfg.get("addresses")
-        | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
+        # | cfg.get("addresses")
+        # | {x: cfg[x] for x in ("sequencer_rpc_port", "sequencer_ds_port")}
         | {
             "deployment_suffix": cfg.get("deployment_suffix"),
-            "stateless_executor": cfg.get("executor").get("service_name")
-            + cfg.get("deployment_suffix"),
-            "executor_port": cfg["executor_port"],
+            # "stateless_executor": cfg.get("executor").get("service_name")
+            # cfg.get("deployment_suffix"),
+            # "executor_port": cfg["executor_port"],
         }
     )
     sequencer_service, rpc_service = import_module(erigon_package).run(
@@ -129,39 +132,39 @@ def run(plan, args):
     #         )
     #         dac_service = import_module(dac_package).run(plan, dac_config)
 
-    # # Deploy sequence-sender
-    # ssender_config = cfg.get("ssender")
-    # if ssender_config:
-    #     plan.exec(
-    #         description="Allowing time for Sequencer DS to avoid SequenceSender failure",
-    #         service_name="foo" + cfg["deployment_suffix"],
-    #         recipe=ExecRecipe(command=["sleep", "20"]),
-    #     )
-    #     ds_url = "{}:{}".format(
-    #         # port specified as sequencer_ds_port for both services
-    #         rpc_service.ip_address,
-    #         cfg["sequencer_ds_port"],
-    #     )
-    #     rpc_url = l2_rpc_url
-    #     if ssender_config.get("read_from_sequencer"):
-    #         ds_url = "{}:{}".format(
-    #             sequencer_service.ip_address, cfg["sequencer_ds_port"]
-    #         )
-    #         rpc_url = l2_seq_url
-    #     ssender_config = (
-    #         ssender_config
-    #         | cfg.get("addresses")
-    #         | {
-    #             "keystore_password": cfg["contracts"]["keystore_password"],
-    #             "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
-    #             "l2_rpc_url": rpc_url,
-    #             "is_validium": contracts_config.get("validium"),
-    #             "l1_chain_id": cfg["l1"]["chain_id"],
-    #             "ds_url": ds_url,
-    #             "deployment_suffix": cfg.get("deployment_suffix"),
-    #         }
-    #     )
-    #     import_module(ssender_package).run(plan, ssender_config)
+    # Deploy sequence-sender
+    ssender_config = cfg.get("ssender")
+    if ssender_config:
+        plan.exec(
+            description="Allowing time for Sequencer DS to avoid SequenceSender failure",
+            service_name="foo" + cfg["deployment_suffix"],
+            recipe=ExecRecipe(command=["sleep", "20"]),
+        )
+        # ds_url = "{}:{}".format(
+        #     # port specified as sequencer_ds_port for both services
+        #     rpc_service.ip_address,
+        #     cfg["sequencer_ds_port"],
+        # )
+        # rpc_url = l2_rpc_url
+        # if ssender_config.get("read_from_sequencer"):
+        #     ds_url = "{}:{}".format(
+        #         sequencer_service.ip_address, cfg["sequencer_ds_port"]
+        #     )
+        #     rpc_url = l2_seq_url
+        ssender_config = (
+            ssender_config
+            # | cfg.get("addresses")
+            | {
+                # "keystore_password": cfg["contracts"]["keystore_password"],
+                # "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                # "l2_rpc_url": rpc_url,
+                # "is_validium": contracts_config.get("validium"),
+                # "l1_chain_id": cfg["l1"]["chain_id"],
+                # "ds_url": ds_url,
+                "deployment_suffix": cfg.get("deployment_suffix"),
+            }
+        )
+        import_module(ssender_package).run(plan, ssender_config)
 
     # aggregator_config = cfg.get("aggregator")
     # if aggregator_config:

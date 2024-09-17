@@ -1,18 +1,18 @@
-SSENDER_CONFIG_TEMPLATE = "./config/ssender-config.toml"
+# SSENDER_CONFIG_TEMPLATE = "./config/ssender-config.toml"
 SSENDER_CONFIG_FILE = "ssender-config.toml"
 
 
-def _gen_config_file(plan, cfg):
-    cfg_file_tpl = read_file(src=SSENDER_CONFIG_TEMPLATE)
+# def _gen_config_file(plan, cfg):
+#     cfg_file_tpl = read_file(src=SSENDER_CONFIG_TEMPLATE)
 
-    plan.render_templates(
-        name=SSENDER_CONFIG_FILE,
-        config={SSENDER_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg)},
-    )
+#     plan.render_templates(
+#         name=SSENDER_CONFIG_FILE,
+#         config={SSENDER_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg)},
+#     )
 
 
 def run(plan, cfg):
-    _gen_config_file(plan, cfg)
+    # _gen_config_file(plan, cfg)
 
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]
