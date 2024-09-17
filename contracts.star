@@ -14,6 +14,7 @@ ARTIFACTS_TO_SAVE = {
         "erigon-rpc.yaml",
         "executor-config.json",
         "genesis.json",
+        "node-genesis.json",
         "dynamic-kurtosis-allocs.json",
         "dynamic-kurtosis-conf.json",
         "dynamic-kurtosis-chainspec.json",

@@ -57,15 +57,21 @@ def run(plan, args):
                         cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
                         cfg["sequencer_ds_port"],
                     ),
+                    "rpc_rpc": "http://{}:{}".format(
+                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
+                        cfg["sequencer_rpc_port"],
+                    ),
+                    "rpc_ds": "{}:{}".format(
+                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
+                        cfg["sequencer_ds_port"],
+                    ),
                     "stateless_executor": cfg["executor"]["service_name"]
                     + cfg["deployment_suffix"],
                     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                     "sequencer_ds_port": cfg["sequencer_ds_port"],
-                    "datastream_addr": "{}:{}".format(
-                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
-                        cfg["sequencer_ds_port"],
-                    ),
-                },
+                    "aggregator_port": cfg["aggregator_port"],
+                }
+                | db_configs,
             }
             # Wont be used if not Validium, no need to remove:
             # | {
@@ -166,38 +172,38 @@ def run(plan, args):
         )
         import_module(ssender_package).run(plan, ssender_config)
 
-    # aggregator_config = cfg.get("aggregator")
-    # if aggregator_config:
-    #     ds_url = "{}:{}".format(
-    #         # port specified as sequencer_ds_port for both services
-    #         rpc_service.ip_address,
-    #         cfg["sequencer_ds_port"],
-    #     )
-    #     rpc_url = l2_rpc_url
-    #     if aggregator_config.get("read_from_sequencer"):
-    #         ds_url = "{}:{}".format(
-    #             sequencer_service.ip_address, cfg["sequencer_ds_port"]
-    #         )
-    #         rpc_url = l2_seq_url
-    #     aggregator_config = (
-    #         aggregator_config
-    #         | db_configs
-    #         | cfg.get("addresses")
-    #         | {
-    #             "aggregator_port": cfg["aggregator_port"],
-    #             "ds_url": ds_url,
-    #             "keystore_password": cfg["contracts"]["keystore_password"],
-    #             "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
-    #             "l2_rpc_url": rpc_url,
-    #             "rollup_fork_id": cfg["contracts"]["rollup_fork_id"],
-    #             "is_validium": contracts_config.get("validium"),
-    #             "l1_chain_id": cfg["l1"]["chain_id"],
-    #             "deployment_suffix": cfg.get("deployment_suffix"),
-    #         }
-    #     )
-    #     aggregator_service = import_module(aggregator_package).run(
-    #         plan, aggregator_config
-    #     )
+    aggregator_config = cfg.get("aggregator")
+    if aggregator_config:
+        # ds_url = "{}:{}".format(
+        #     # port specified as sequencer_ds_port for both services
+        #     rpc_service.ip_address,
+        #     cfg["sequencer_ds_port"],
+        # )
+        # rpc_url = l2_rpc_url
+        # if aggregator_config.get("read_from_sequencer"):
+        #     ds_url = "{}:{}".format(
+        #         sequencer_service.ip_address, cfg["sequencer_ds_port"]
+        #     )
+        #     rpc_url = l2_seq_url
+        aggregator_config = (
+            aggregator_config
+            | db_configs
+            # | cfg.get("addresses")
+            | {
+                "aggregator_port": cfg["aggregator_port"],
+                # "ds_url": ds_url,
+                # "keystore_password": cfg["contracts"]["keystore_password"],
+                # "l1_rpc_url": cfg["contracts"]["l1_rpc_url"],
+                # "l2_rpc_url": rpc_url,
+                # "rollup_fork_id": cfg["contracts"]["rollup_fork_id"],
+                # "is_validium": contracts_config.get("validium"),
+                # "l1_chain_id": cfg["l1"]["chain_id"],
+                "deployment_suffix": cfg.get("deployment_suffix"),
+            }
+        )
+        aggregator_service = import_module(aggregator_package).run(
+            plan, aggregator_config
+        )
 
     # # Deploy mockprover
     # mockprover_config = cfg.get("mockprover")

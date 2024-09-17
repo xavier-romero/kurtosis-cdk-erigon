@@ -1,6 +1,6 @@
 # SSENDER_CONFIG_TEMPLATE = "./config/ssender-config.toml"
 SSENDER_CONFIG_FILE = "ssender-config.toml"
-
+SSENDER_GENESIS_FILE = "node-genesis.json"
 
 # def _gen_config_file(plan, cfg):
 #     cfg_file_tpl = read_file(src=SSENDER_CONFIG_TEMPLATE)
@@ -21,7 +21,7 @@ def run(plan, cfg):
             artifact_names=[
                 plan.get_files_artifact("sequencer.keystore"),
                 plan.get_files_artifact(SSENDER_CONFIG_FILE),
-                plan.get_files_artifact("genesis.json"),
+                plan.get_files_artifact(SSENDER_GENESIS_FILE),
             ]
         ),
         "/data": Directory(persistent_key="ssender-data"),
@@ -29,9 +29,10 @@ def run(plan, cfg):
     service_cmd = [
         "/bin/sh",
         "-c",
-        "/app/zkevm-seqsender run --network custom --custom-network-file /config/genesis.json --cfg /config/"
-        + SSENDER_CONFIG_FILE
-        # + " --components sequence-sender",
+        "/app/zkevm-seqsender run --network custom --custom-network-file /config/"
+        + SSENDER_GENESIS_FILE
+        + " --cfg /config/"
+        + SSENDER_CONFIG_FILE,
     ]
 
     service_config = ServiceConfig(
