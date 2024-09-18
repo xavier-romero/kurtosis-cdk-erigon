@@ -21,6 +21,7 @@ def _get_erigon_config(cfg):
             "NAME": "sequencer",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
+                "--pprof",
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
             ],
@@ -33,6 +34,7 @@ def _get_erigon_config(cfg):
             "NAME": "rpc",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
+                "--pprof",
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/" + ERIGON_COMMON["CONFIG_FILE"],
             ],
