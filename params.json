@@ -62,13 +62,11 @@
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0",
-    "read_from_sequencer": true
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.4",
-    "read_from_sequencer": true
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
   },
   "mockprover": {
     "service_name": "mockprover",

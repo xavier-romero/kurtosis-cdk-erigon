@@ -1,18 +1,18 @@
-MOCKPROVER_CONFIG_TEMPLATE = "./config/mockprover-config.json"
+# MOCKPROVER_CONFIG_TEMPLATE = "./config/mockprover-config.json"
 MOCKPROVER_CONFIG_FILE = "mockprover-config.json"
 
 
-def _gen_config_file(plan, cfg):
-    cfg_file_tpl = read_file(src=MOCKPROVER_CONFIG_TEMPLATE)
+# def _gen_config_file(plan, cfg):
+#     cfg_file_tpl = read_file(src=MOCKPROVER_CONFIG_TEMPLATE)
 
-    plan.render_templates(
-        name=MOCKPROVER_CONFIG_FILE,
-        config={MOCKPROVER_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg)},
-    )
+#     plan.render_templates(
+#         name=MOCKPROVER_CONFIG_FILE,
+#         config={MOCKPROVER_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg)},
+#     )
 
 
 def run(plan, cfg):
-    _gen_config_file(plan, cfg)
+    # _gen_config_file(plan, cfg)
 
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]

@@ -47,6 +47,7 @@ def run(plan, args):
                 "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
                 "l1_funding_amount": cfg.get("l1_funding_amount"),
                 "suffix": cfg["deployment_suffix"],
+                "addresses": addresses,
                 "extra": {
                     "executor_port": cfg["executor_port"],
                     "sequencer_rpc": "http://{}:{}".format(
@@ -70,6 +71,8 @@ def run(plan, args):
                     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                     "sequencer_ds_port": cfg["sequencer_ds_port"],
                     "aggregator_port": cfg["aggregator_port"],
+                    "aggregator_host": cfg["aggregator"]["service_name"]
+                    + cfg["deployment_suffix"],
                 }
                 | db_configs,
             }
@@ -205,15 +208,15 @@ def run(plan, args):
             plan, aggregator_config
         )
 
-    # # Deploy mockprover
-    # mockprover_config = cfg.get("mockprover")
-    # if mockprover_config:
-    #     mockprover_config |= {
-    #         "aggregator_port": cfg["aggregator_port"],
-    #         "aggregator_host": aggregator_service.ip_address,
-    #         "deployment_suffix": cfg["deployment_suffix"],
-    #     }
-    #     import_module(mockprover_package).run(plan, mockprover_config)
+    # Deploy mockprover
+    mockprover_config = cfg.get("mockprover")
+    if mockprover_config:
+        mockprover_config |= {
+            # "aggregator_port": cfg["aggregator_port"],
+            # "aggregator_host": aggregator_service.ip_address,
+            "deployment_suffix": cfg["deployment_suffix"],
+        }
+        import_module(mockprover_package).run(plan, mockprover_config)
 
     # # Deploy L2 Blockscout
     # bs_config = cfg.get("blockscout", {}).get("enabled")
