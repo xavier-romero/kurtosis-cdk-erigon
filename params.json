@@ -36,13 +36,12 @@
   },
   "contracts": {
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
+    "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "rollup_fork_id": 11,
     "l2_chain_id": 10101,
     "validium": true,
     "image": "xavierromero/cdk-sc-deployer:latest",
-
-    "zkevm_use_gas_token_contract": false,
-    "l1_ws_url": "ws://el-1-geth-lighthouse:8546"
+    "zkevm_use_gas_token_contract": false
   },
   "executor": {
     "service_name": "executor",

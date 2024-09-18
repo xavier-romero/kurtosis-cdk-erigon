@@ -7,7 +7,6 @@ ARTIFACTS_TO_SAVE = {
         "claimtx.keystore",
         "create_rollup_output.json",
         "create_rollup_parameters.json",
-        "dac-config.toml",
         "deploy_output.json",
         "deploy_parameters.json",
         "erigon-sequencer.yaml",
@@ -25,6 +24,10 @@ ARTIFACTS_TO_SAVE = {
         "wallets.json",
     ],
 }
+DAC_ARTIFACTS_TO_SAVE = [
+    "dac.keystore",
+    "dac-config.toml",
+]
 
 
 def run(plan, cfg):
@@ -47,6 +50,7 @@ def run(plan, cfg):
                 "IS_VALIDIUM": "1" if cfg.get("validium") else "0",
                 "L1_FUND_AMOUNT": str(cfg["l1_funding_amount"]),
                 "ADDRESSES": json.encode(cfg.get("addresses", {})),
+                "DAC_URLS": cfg.get("dac_urls", ""),
                 "JSON_EXTRA_PARAMS": json.encode(cfg.get("extra", {})),
             },
         ),
@@ -60,7 +64,11 @@ def run(plan, cfg):
         ),
     )
 
-    for artifact_to_save in ARTIFACTS_TO_SAVE["files"]:
+    _artifacts_to_save = ARTIFACTS_TO_SAVE["files"]
+    if cfg.get("validium"):
+        _artifacts_to_save = ARTIFACTS_TO_SAVE["files"] + DAC_ARTIFACTS_TO_SAVE
+
+    for artifact_to_save in _artifacts_to_save:
         plan.print(type(artifact_to_save))
         # No isinstance availble for Starlark :-<
         if type(artifact_to_save) == type({}):

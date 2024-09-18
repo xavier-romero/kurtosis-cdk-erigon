@@ -39,8 +39,9 @@ def run(plan, args):
                 "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
                 "l1_funding_amount": cfg.get("l1_funding_amount"),
                 "addresses": addresses,
+                "dac_urls": cfg["dac"]["service_name"] + cfg["deployment_suffix"],
                 "extra": {
-                    "executor_port": cfg["executor_port"],
+                    "executor_port": cfg["executor"]["executor_port"],
                     "sequencer_rpc": "http://{}:{}".format(
                         cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
                         cfg["sequencer_rpc_port"],
@@ -61,9 +62,11 @@ def run(plan, args):
                     + cfg["deployment_suffix"],
                     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                     "sequencer_ds_port": cfg["sequencer_ds_port"],
-                    "aggregator_port": cfg["aggregator_port"],
+                    "aggregator_port": cfg["aggregator"]["aggregator_port"],
                     "aggregator_host": cfg["aggregator"]["service_name"]
                     + cfg["deployment_suffix"],
+                    "dac_port": cfg["dac"]["dac_port"],
+                    "l1_ws_url": contracts_config.get("l1_ws_url"),
                 }
                 | db_configs,
             }
@@ -83,26 +86,28 @@ def run(plan, args):
     else:
         plan.print("Skipping the deployment of zkevm contracts on L1")
 
+    # Deploy DAC if enabled
+    if contracts_config.get("validium"):
+        dac_service = import_module(dac_package).run(plan, cfg.get("dac"))
+
     # Deploy executor
     import_module(executor_package).run(plan, cfg.get("executor"))
 
     # Deploy Erigon
-    sequencer_service, rpc_service = import_module(erigon_package).run(
-        plan, cfg.get("erigon")
-    )
+    import_module(erigon_package).run(plan, cfg.get("erigon"))
 
+    # Allow some time for DS to start
     plan.exec(
         description="Allowing time for Sequencer DS to avoid SequenceSender failure",
         service_name=contracts_service.name,
         recipe=ExecRecipe(command=["sleep", "10"]),
     )
+
     # Deploy sequence-sender
     import_module(ssender_package).run(plan, cfg.get("ssender"))
 
     # Deploy Aggregator
-    aggregator_service = import_module(aggregator_package).run(
-        plan, cfg.get("aggregator")
-    )
+    import_module(aggregator_package).run(plan, cfg.get("aggregator"))
 
     # Deploy mockprover
     import_module(mockprover_package).run(plan, cfg.get("mockprover"))

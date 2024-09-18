@@ -55,10 +55,8 @@ def get_config(args):
         "zkevm_rpc_http_port": _RPC_HTTP_PORT,
         "zkevm_dac_port": _DAC_PORT,
         "l1_funding_amount": _L1_FUNDING_AMOUNT,
-        "aggregator_port": _AGGR_PORT,
         "sequencer_rpc_port": _SEQUENCER_RPC_PORT,
         "sequencer_ds_port": _SEQUENCER_DS_PORT,
-        "executor_port": _EXECUTOR_PORT,
     }
 
     for k in args.keys():
@@ -80,5 +78,9 @@ def get_config(args):
     if args.get("executor"):
         cfg["executor"] = args.get("executor")
         cfg["executor"]["executor_port"] = _EXECUTOR_PORT
+
+    if args.get("dac"):
+        cfg["dac"] = args.get("dac")
+        cfg["dac"]["dac_port"] = _DAC_PORT
 
     return args | cfg
