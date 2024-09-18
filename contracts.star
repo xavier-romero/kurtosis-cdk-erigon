@@ -28,9 +28,9 @@ ARTIFACTS_TO_SAVE = {
 
 
 def run(plan, cfg):
-    contracts_service_name = "contracts" + cfg["suffix"]
+    contracts_service_name = "contracts" + cfg["deployment_suffix"]
     contracts_image = cfg["image"]
-    plan.add_service(
+    service = plan.add_service(
         name=contracts_service_name,
         config=ServiceConfig(
             image=contracts_image,
@@ -75,3 +75,5 @@ def run(plan, cfg):
             src="{}/{}".format(ARTIFACTS_TO_SAVE["path"], src),
             description="Storing {}".format(dst),
         )
+
+    return service

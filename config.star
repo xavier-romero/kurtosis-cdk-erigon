@@ -20,6 +20,7 @@ def _get_erigon_config(cfg):
             "NAME": "sequencer",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
+                "--pprof",
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/erigon-sequencer.yaml",
             ],
@@ -32,6 +33,7 @@ def _get_erigon_config(cfg):
             "NAME": "rpc",
             "IMAGE": ERIGON_COMMON["IMAGE"],
             "CMD": [
+                "--pprof",
                 "--config",
                 ERIGON_COMMON["CONFIG_PATH"] + "/erigon-rpc.yaml",
             ],
@@ -58,11 +60,25 @@ def get_config(args):
         "sequencer_ds_port": _SEQUENCER_DS_PORT,
         "executor_port": _EXECUTOR_PORT,
     }
+
+    for k in args.keys():
+        if type(args[k]) == type({}):
+            args[k]["deployment_suffix"] = args.get("deployment_suffix")
+
     if args.get("erigon"):
         cfg["erigon"] = _get_erigon_config(args.get("erigon"))
         cfg["erigon"]["l2_chain_id"] = args["contracts"]["l2_chain_id"]
         cfg["erigon"]["l1_chain_id"] = args["l1"]["chain_id"]
         cfg["erigon"]["l1_rpc_url"] = args["contracts"]["l1_rpc_url"]
         cfg["erigon"]["fork_id"] = args["contracts"]["rollup_fork_id"]
+        cfg["erigon"]["deployment_suffix"] = args.get("deployment_suffix")
+
+    if args.get("aggregator"):
+        cfg["aggregator"] = args.get("aggregator")
+        cfg["aggregator"]["aggregator_port"] = _AGGR_PORT
+
+    if args.get("executor"):
+        cfg["executor"] = args.get("executor")
+        cfg["executor"]["executor_port"] = _EXECUTOR_PORT
 
     return args | cfg

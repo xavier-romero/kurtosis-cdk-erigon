@@ -1,28 +1,8 @@
-# AGGREGATOR_CONFIG_TEMPLATE = "./config/aggregator-config.toml"
 AGGREGATOR_CONFIG_FILE = "aggregator-config.toml"
 AGGREGATOR_GENESIS_FILE = "node-genesis.json"
 
 
-# def _gen_config_file(plan, cfg):
-#     cfg_file_tpl = read_file(src=AGGREGATOR_CONFIG_TEMPLATE)
-
-#     result = plan.run_sh(
-#         run="jq -j '.genesis[] | select(.contractName == \"PolygonZkEVMGlobalExitRootL2 proxy\") | .address' /input/genesis.json",
-#         files={"/input": plan.get_files_artifact("genesis.json")},
-#     )
-#     extra_cfg = {"ger_l2_address": result.output.strip()}
-
-#     plan.render_templates(
-#         name=AGGREGATOR_CONFIG_FILE,
-#         config={
-#             AGGREGATOR_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg | extra_cfg)
-#         },
-#     )
-
-
 def run(plan, cfg):
-    # _gen_config_file(plan, cfg)
-
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]
     service_files = {
