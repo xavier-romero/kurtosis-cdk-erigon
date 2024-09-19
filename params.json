@@ -13,10 +13,6 @@
       "address": "0x5b06837A43bdC3dD9F114558DAf4B26ed49842Ed",
       "private_key": "0x183c492d0ba156041a7f31a1b188958a7a22eebadca741a7fe64436092dc3181"
     },
-    "admin": {
-      "address": "0xE34aaF64b29273B7D567FCFc40544c014EEe9970",
-      "private_key": "0x12d7de8621a77640c9241b2595ba78ce443d05e94090365ab3bb5e19df82c625"
-    },
     "aggregator": {
       "address": "0xCae5b68Ff783594bDe1b93cdE627c741722c4D4d",
       "private_key": "0x2857ca0e7748448f3a50469f7ffe55cde7299d5696aedd72cfe18a06fb856970"
@@ -39,21 +35,20 @@
     }
   },
   "contracts": {
-    "image": "leovct/zkevm-contracts",
-    "zkevm_use_gas_token_contract": false,
-    "rollup_fork_id": 11,
-    "validium": false,
-    "l2_chain_id": 10101,
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
-    "keystore_password": "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+    "rollup_fork_id": 11,
+    "l2_chain_id": 10101,
+    "validium": false,
+    "image": "hermeznetwork/cdk-sc-deployer:latest",
+    "zkevm_use_gas_token_contract": false
   },
   "executor": {
     "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.1-fork.11"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.0.0-beta18"
+    "image": "hermeznetwork/cdk-erigon:v2.0.0-beta18.2"
   },
   "dac": {
     "service_name": "dac",
@@ -61,17 +56,15 @@
   },
   "ssender": {
     "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.0",
-    "read_from_sequencer": true
+    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.1-RC3"
   },
   "aggregator": {
     "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.4",
-    "read_from_sequencer": true
+    "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
   },
   "mockprover": {
     "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v7.0.0-fork.11"
+    "image": "hermeznetwork/zkevm-prover:v7.0.1-fork.11"
   },
   "blockscout": {
     "enabled": false
