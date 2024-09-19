@@ -25,13 +25,8 @@ DATABASES = {
     },
 }
 
-
 def _service_name(suffix):
     return POSTGRES_SERVICE_NAME + suffix
-
-
-# def _pless_suffix(suffix):
-#     return "-pless" + suffix
 
 
 def get_db_configs(suffix):
@@ -39,14 +34,6 @@ def get_db_configs(suffix):
         k: v | {"hostname": _service_name(suffix), "port": POSTGRES_PORT}
         for k, v in DATABASES.items()
     }
-
-
-# def get_pless_db_configs(suffix):
-#     return {
-#         k: v | {"hostname": _service_name(_pless_suffix(suffix)), "port": POSTGRES_PORT}
-#         for k, v in CDK_DATABASES.items()
-#     }
-
 
 def create_postgres_service(plan, db_configs, suffix):
     init_script_tpl = read_file(src=MASTER_INIT_SQL)
@@ -88,8 +75,3 @@ def create_postgres_service(plan, db_configs, suffix):
 def run(plan, suffix):
     db_configs = DATABASES.values()
     create_postgres_service(plan, db_configs, suffix)
-
-
-# def run_pless(plan, suffix):
-#     db_configs = CDK_DATABASES.values()
-#     create_postgres_service(plan, db_configs, _pless_suffix(suffix))

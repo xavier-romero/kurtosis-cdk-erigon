@@ -1,7 +1,6 @@
 SSENDER_CONFIG_FILE = "ssender-config.toml"
 SSENDER_GENESIS_FILE = "node-genesis.json"
 
-
 def run(plan, cfg):
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]

@@ -1,28 +1,4 @@
-# DAC_CONFIG_TEMPLATE = "./config/dac-config.toml"
 DAC_CONFIG_FILE = "dac-config.toml"
-
-
-# def _gen_config_file(plan, cfg):
-#     cfg_file_tpl = read_file(src=DAC_CONFIG_TEMPLATE)
-
-#     result1 = plan.run_sh(
-#         run="jq -j .polygonDataCommitteeAddress /input/create_rollup_output.json",
-#         files={"/input": plan.get_files_artifact("create_rollup_output.json")},
-#     )
-#     result2 = plan.run_sh(
-#         run="jq -j .rollupAddress /input/create_rollup_output.json",
-#         files={"/input": plan.get_files_artifact("create_rollup_output.json")},
-#     )
-#     extra_cfg = {
-#         "polygonDataCommitteeAddress": result1.output.strip(),
-#         "zkEVMAddress": result2.output.strip(),
-#     }
-
-#     plan.render_templates(
-#         name=DAC_CONFIG_FILE,
-#         config={DAC_CONFIG_FILE: struct(template=cfg_file_tpl, data=cfg | extra_cfg)},
-#     )
-
 
 def run(plan, cfg):
     # _gen_config_file(plan, cfg)

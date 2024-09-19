@@ -39,7 +39,10 @@ def run(plan, args):
                 "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
                 "l1_funding_amount": cfg.get("l1_funding_amount"),
                 "addresses": addresses,
-                "dac_urls": cfg["dac"]["service_name"] + cfg["deployment_suffix"],
+                "dac_urls": "http://{}:{}".format(
+                    cfg["dac"]["service_name"] + cfg["deployment_suffix"],
+                    cfg["dac"]["dac_port"],
+                ),
                 "extra": {
                     "executor_port": cfg["executor"]["executor_port"],
                     "sequencer_rpc": "http://{}:{}".format(
@@ -70,16 +73,6 @@ def run(plan, args):
                 }
                 | db_configs,
             }
-            # Wont be used if not Validium, no need to remove:
-            # | {
-            #     "dac_url": "http://{}:{}".format(
-            #         cfg["dac"]["service_name"] + cfg["deployment_suffix"],
-            #         cfg["zkevm_dac_port"],
-            #     ),
-            #     "deployment_suffix": cfg["deployment_suffix"],
-            #     "suffix": cfg["deployment_suffix"],
-            #     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
-            # }
         )
         plan.print("Deploying zkevm contracts on L1")
         contracts_service = import_module(contracts_package).run(plan, contracts_config)

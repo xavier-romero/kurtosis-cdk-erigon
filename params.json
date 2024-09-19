@@ -39,8 +39,8 @@
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "rollup_fork_id": 11,
     "l2_chain_id": 10101,
-    "validium": true,
-    "image": "xavierromero/cdk-sc-deployer:latest",
+    "validium": false,
+    "image": "hermeznetwork/cdk-sc-deployer:latest",
     "zkevm_use_gas_token_contract": false
   },
   "executor": {

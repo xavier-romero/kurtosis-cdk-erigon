@@ -4,7 +4,7 @@ ARTIFACTS_TO_SAVE = {
     "files": [
         "aggregator-config.toml",
         "aggregator.keystore",
-        "claimtx.keystore",
+        "claimtxmanager.keystore",
         "create_rollup_output.json",
         "create_rollup_parameters.json",
         "deploy_output.json",
@@ -69,7 +69,6 @@ def run(plan, cfg):
         _artifacts_to_save = ARTIFACTS_TO_SAVE["files"] + DAC_ARTIFACTS_TO_SAVE
 
     for artifact_to_save in _artifacts_to_save:
-        plan.print(type(artifact_to_save))
         # No isinstance availble for Starlark :-<
         if type(artifact_to_save) == type({}):
             (src, dst) = list(artifact_to_save.items())[0]
