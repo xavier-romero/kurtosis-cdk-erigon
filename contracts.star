@@ -46,6 +46,7 @@ def run(plan, cfg):
                 "FORKID": str(cfg["rollup_fork_id"]),
                 "REAL_VERIFIER": "0",
                 "NETWORK_NAME": "kurtosis",
+                "DEPLOY_GAS_TOKEN": cfg["deploy_gas_token"],
                 "L2_CHAIN_ID": str(cfg["l2_chain_id"]),
                 "IS_VALIDIUM": "1" if cfg.get("validium") else "0",
                 "L1_FUND_AMOUNT": str(cfg["l1_funding_amount"]),

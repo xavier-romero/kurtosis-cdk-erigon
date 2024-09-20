@@ -40,8 +40,8 @@
     "rollup_fork_id": 11,
     "l2_chain_id": 10101,
     "validium": false,
-    "image": "hermeznetwork/cdk-sc-deployer:latest",
-    "zkevm_use_gas_token_contract": false
+    "image": "xavierromero/cdk-sc-deployer:latest",
+    "deploy_gas_token": true
   },
   "executor": {
     "service_name": "executor",
