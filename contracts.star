@@ -22,6 +22,8 @@ ARTIFACTS_TO_SAVE = {
         "ssender-config.toml",
         "network-kurtosis.json",
         "wallets.json",
+        "pool-manager-config.toml",
+        "bridge-config.toml",
     ],
 }
 DAC_ARTIFACTS_TO_SAVE = [
@@ -46,7 +48,7 @@ def run(plan, cfg):
                 "FORKID": str(cfg["rollup_fork_id"]),
                 "REAL_VERIFIER": "0",
                 "NETWORK_NAME": "kurtosis",
-                "DEPLOY_GAS_TOKEN": cfg["deploy_gas_token"],
+                "DEPLOY_GAS_TOKEN": "1" if cfg["deploy_gas_token"] else "0",
                 "L2_CHAIN_ID": str(cfg["l2_chain_id"]),
                 "IS_VALIDIUM": "1" if cfg.get("validium") else "0",
                 "L1_FUND_AMOUNT": str(cfg["l1_funding_amount"]),

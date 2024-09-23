@@ -40,8 +40,8 @@
     "rollup_fork_id": 11,
     "l2_chain_id": 10101,
     "validium": false,
-    "image": "xavierromero/cdk-sc-deployer:latest",
-    "deploy_gas_token": true
+    "image": "hermeznetwork/cdk-sc-deployer:latest",
+    "deploy_gas_token": false
   },
   "executor": {
     "service_name": "executor",
@@ -61,6 +61,14 @@
   "aggregator": {
     "service_name": "aggregator",
     "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
+  },
+  "poolmanager": {
+    "service_name": "poolmanager",
+    "image": "hermeznetwork/zkevm-pool-manager:v0.1.0"
+  },
+  "bridge": {
+    "service_name": "bridge",
+    "image": "hermeznetwork/zkevm-bridge-service:v0.5.0"
   },
   "mockprover": {
     "service_name": "mockprover",

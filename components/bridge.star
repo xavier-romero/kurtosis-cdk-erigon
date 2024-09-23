@@ -1,4 +1,4 @@
-PM_CONFIG_FILE = "pool-manager-config.toml"
+BRIDGE_CONFIG_FILE = "bridge-config.toml"
 
 
 def run(plan, cfg):
@@ -7,17 +7,13 @@ def run(plan, cfg):
     service_files = {
         "/config": Directory(
             artifact_names=[
-                plan.get_files_artifact(PM_CONFIG_FILE),
+                plan.get_files_artifact("claimtxmanager.keystore"),
+                plan.get_files_artifact(BRIDGE_CONFIG_FILE),
             ]
         )
     }
-    service_cmd = [
-        "/app/zkevm-pool-manager",
-        "run",
-        "--cfg",
-        "/config/" + PM_CONFIG_FILE,
-    ]
-    service_ports = {"pm": PortSpec(cfg["pm_port"], application_protocol="tcp")}
+    service_cmd = ["/app/zkevm-bridge", "run", "--cfg", "/config/" + BRIDGE_CONFIG_FILE]
+    service_ports = {"bridge": PortSpec(cfg["bridge_port"], application_protocol="tcp")}
 
     service_config = ServiceConfig(
         image=service_image,

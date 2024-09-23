@@ -2,10 +2,12 @@ _PARAMS_FILE = "params.json"
 _RPC_HTTP_PORT = 8123
 _DAC_PORT = 8484
 _AGGR_PORT = 50081
+_PM_PORT = 8545
 _L1_FUNDING_AMOUNT = 100
 _SEQUENCER_RPC_PORT = 8123
 _SEQUENCER_DS_PORT = 6900
 _EXECUTOR_PORT = 50071
+_BRIDGE_PORT = 8080
 
 
 def _get_erigon_config(cfg):
@@ -82,5 +84,13 @@ def get_config(args):
     if args.get("dac"):
         cfg["dac"] = args.get("dac")
         cfg["dac"]["dac_port"] = _DAC_PORT
+
+    if args.get("poolmanager"):
+        cfg["poolmanager"] = args.get("poolmanager")
+        cfg["poolmanager"]["pm_port"] = _PM_PORT
+
+    if args.get("bridge"):
+        cfg["bridge"] = args.get("bridge")
+        cfg["bridge"]["bridge_port"] = _BRIDGE_PORT
 
     return args | cfg

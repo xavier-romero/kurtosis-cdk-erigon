@@ -8,6 +8,8 @@ aggregator_package = "./components/aggregator.star"
 ssender_package = "./components/ssender.star"
 mockprover_package = "./components/mockprover.star"
 dac_package = "./components/dac.star"
+poolmanager_package = "./components/pool-manager.star"
+bridge_package = "./components/bridge.star"
 blockscout_package = "./external/blockscout.star"
 
 
@@ -61,6 +63,10 @@ def run(plan, args):
                         cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
                         cfg["sequencer_ds_port"],
                     ),
+                    "pm_url": "http://{}:{}".format(
+                        cfg["poolmanager"]["service_name"] + cfg["deployment_suffix"],
+                        cfg["poolmanager"]["pm_port"],
+                    ),
                     "stateless_executor": cfg["executor"]["service_name"]
                     + cfg["deployment_suffix"],
                     "sequencer_rpc_port": cfg["sequencer_rpc_port"],
@@ -70,6 +76,8 @@ def run(plan, args):
                     + cfg["deployment_suffix"],
                     "dac_port": cfg["dac"]["dac_port"],
                     "l1_ws_url": contracts_config.get("l1_ws_url"),
+                    "pm_port": cfg["poolmanager"]["pm_port"],
+                    "bridge_port": cfg["bridge"]["bridge_port"],
                 }
                 | db_configs,
             }
@@ -89,6 +97,9 @@ def run(plan, args):
     # Deploy Erigon
     import_module(erigon_package).run(plan, cfg.get("erigon"))
 
+    # Deploy Pool Manager
+    import_module(poolmanager_package).run(plan, cfg.get("poolmanager"))
+
     # Allow some time for DS to start
     plan.exec(
         description="Allowing time for Sequencer DS to avoid SequenceSender failure",
@@ -104,6 +115,9 @@ def run(plan, args):
 
     # Deploy mockprover
     import_module(mockprover_package).run(plan, cfg.get("mockprover"))
+
+    # Deploy Bridge
+    import_module(bridge_package).run(plan, cfg.get("bridge"))
 
     # # Deploy L2 Blockscout
     # bs_config = cfg.get("blockscout", {}).get("enabled")

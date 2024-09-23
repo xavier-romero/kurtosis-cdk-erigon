@@ -28,6 +28,11 @@ DATABASES = {
         "user": "pm_user",
         "password": "fGfsPQnZC5WwGHnOJE1eQ0iYr9TvKOND",
     },
+    "bridge_db": {
+        "name": "bridge_db",
+        "user": "bridge_user",
+        "password": "SqucbLEU14Lg8fUDPfSs3tBiw78uu7rF",
+    },
 }
 
 
