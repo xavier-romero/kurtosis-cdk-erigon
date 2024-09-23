@@ -1,5 +1,4 @@
-SSENDER_CONFIG_FILE = "ssender-config.toml"
-SSENDER_GENESIS_FILE = "node-genesis.json"
+PM_CONFIG_FILE = "pool-manager-config.toml"
 
 
 def run(plan, cfg):
@@ -8,26 +7,23 @@ def run(plan, cfg):
     service_files = {
         "/config": Directory(
             artifact_names=[
-                plan.get_files_artifact("sequencer.keystore"),
-                plan.get_files_artifact(SSENDER_CONFIG_FILE),
-                plan.get_files_artifact(SSENDER_GENESIS_FILE),
+                plan.get_files_artifact(PM_CONFIG_FILE),
             ]
-        ),
-        "/data": Directory(persistent_key="ssender-data"),
+        )
     }
     service_cmd = [
-        "/bin/sh",
-        "-c",
-        "/app/zkevm-seqsender run --network custom --custom-network-file /config/"
-        + SSENDER_GENESIS_FILE
-        + " --cfg /config/"
-        + SSENDER_CONFIG_FILE,
+        "/app/zkevm-pool-manager",
+        "run",
+        "--cfg",
+        "/config/" + PM_CONFIG_FILE,
     ]
+    service_ports = {"dac": PortSpec(cfg["pm_port"], application_protocol="tcp")}
 
     service_config = ServiceConfig(
         image=service_image,
         files=service_files,
         cmd=service_cmd,
+        ports=service_ports,
     )
 
     service = plan.add_service(

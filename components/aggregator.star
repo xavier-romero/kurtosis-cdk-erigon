@@ -1,6 +1,7 @@
 AGGREGATOR_CONFIG_FILE = "aggregator-config.toml"
 AGGREGATOR_GENESIS_FILE = "node-genesis.json"
 
+
 def run(plan, cfg):
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]

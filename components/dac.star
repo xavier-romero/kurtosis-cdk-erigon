@@ -1,8 +1,7 @@
 DAC_CONFIG_FILE = "dac-config.toml"
 
-def run(plan, cfg):
-    # _gen_config_file(plan, cfg)
 
+def run(plan, cfg):
     service_name = cfg["service_name"] + cfg["deployment_suffix"]
     service_image = cfg["image"]
     service_files = {

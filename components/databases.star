@@ -21,9 +21,15 @@ DATABASES = {
     "dac_db": {
         "name": "dac_db",
         "user": "dac_user",
-        "password": "Qso5wMcLAN3oF7EfaawzgWKUUKWM3Vov",
+        "password": "aiqbvbN1x6BhiUvsJfljC0AmLeKGac25",
+    },
+    "pm_db": {
+        "name": "pm_db",
+        "user": "pm_user",
+        "password": "fGfsPQnZC5WwGHnOJE1eQ0iYr9TvKOND",
     },
 }
+
 
 def _service_name(suffix):
     return POSTGRES_SERVICE_NAME + suffix
@@ -34,6 +40,7 @@ def get_db_configs(suffix):
         k: v | {"hostname": _service_name(suffix), "port": POSTGRES_PORT}
         for k, v in DATABASES.items()
     }
+
 
 def create_postgres_service(plan, db_configs, suffix):
     init_script_tpl = read_file(src=MASTER_INIT_SQL)
