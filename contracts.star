@@ -2,33 +2,37 @@ ARTIFACTS_TO_SAVE = {
     "path": "/output",
     # These files are used from erigon._generate_dynamic_files, ssender, aggregator
     "files": [
-        "aggregator-config.toml",
-        "aggregator.keystore",
-        "claimtxmanager.keystore",
-        "create_rollup_output.json",
-        "create_rollup_parameters.json",
-        "deploy_output.json",
-        "deploy_parameters.json",
-        "erigon-sequencer.yaml",
-        "erigon-rpc.yaml",
-        "executor-config.json",
-        "genesis.json",
-        "node-genesis.json",
-        "dynamic-kurtosis-allocs.json",
-        "dynamic-kurtosis-conf.json",
-        "dynamic-kurtosis-chainspec.json",
-        "mockprover-config.json",
-        "sequencer.keystore",
-        "ssender-config.toml",
-        "network-kurtosis.json",
+        # Configuration files
+        "config/aggregator-config.toml",
+        "config/erigon-sequencer.yaml",
+        "config/erigon-rpc.yaml",
+        "config/executor-config.json",
+        "config/dynamic-kurtosis-allocs.json",
+        "config/dynamic-kurtosis-conf.json",
+        "config/dynamic-kurtosis-chainspec.json",
+        "config/mockprover-config.json",
+        "config/ssender-config.toml",
+        "config/pool-manager-config.toml",
+        "config/bridge-config.toml",
+        "config/node-genesis.json",
+        # Keystores
+        "config/keystores/aggregator.keystore",
+        "config/keystores/claimtxmanager.keystore",
+        "config/keystores/sequencer.keystore",
+        # Deployment files
+        "deployment/create_rollup_output.json",
+        "deployment/create_rollup_parameters.json",
+        "deployment/deploy_output.json",
+        "deployment/deploy_parameters.json",
+        "deployment/genesis.json",
+        "deployment/network-kurtosis.json",
+        # Accounts/wallets info
         "wallets.json",
-        "pool-manager-config.toml",
-        "bridge-config.toml",
     ],
 }
 DAC_ARTIFACTS_TO_SAVE = [
-    "dac.keystore",
-    "dac-config.toml",
+    "/config/keystores/dac.keystore",
+    "/config/dac-config.toml",
 ]
 
 
@@ -54,6 +58,7 @@ def run(plan, cfg):
                 "L1_FUND_AMOUNT": str(cfg["l1_funding_amount"]),
                 "ADDRESSES": json.encode(cfg.get("addresses", {})),
                 "DAC_URLS": cfg.get("dac_urls", ""),
+                "COMPOSE_CONFIG": "0",
                 "JSON_EXTRA_PARAMS": json.encode(cfg.get("extra", {})),
             },
         ),
@@ -72,12 +77,14 @@ def run(plan, cfg):
         _artifacts_to_save = ARTIFACTS_TO_SAVE["files"] + DAC_ARTIFACTS_TO_SAVE
 
     for artifact_to_save in _artifacts_to_save:
+        if type(artifact_to_save) == type("string"):
+            src = artifact_to_save
+            dst = artifact_to_save.split("/")[-1]
         # No isinstance availble for Starlark :-<
-        if type(artifact_to_save) == type({}):
+        elif type(artifact_to_save) == type({}):
             (src, dst) = list(artifact_to_save.items())[0]
         else:
-            src = artifact_to_save
-            dst = artifact_to_save
+            fail("Invalid artifact_to_save: {}".format(artifact_to_save))
 
         plan.store_service_files(
             service_name=contracts_service_name,

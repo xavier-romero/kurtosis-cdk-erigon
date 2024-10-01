@@ -35,53 +35,50 @@ def run(plan, args):
         addresses = cfg.get("addresses")
         if not addresses:
             fail("Missing addresses for zkevm contracts")
-        contracts_config = (
-            contracts_config
-            | {
-                "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
-                "l1_funding_amount": cfg.get("l1_funding_amount"),
-                "addresses": addresses,
-                "dac_urls": "http://{}:{}".format(
-                    cfg["dac"]["service_name"] + cfg["deployment_suffix"],
-                    cfg["dac"]["dac_port"],
+        contracts_config = contracts_config | {
+            "l1_funded_mnemonic": cfg.get("l1").get("preallocated_mnemonic"),
+            "l1_funding_amount": cfg.get("l1_funding_amount"),
+            "addresses": addresses,
+            "dac_urls": "http://{}:{}".format(
+                cfg["dac"]["service_name"] + cfg["deployment_suffix"],
+                cfg["dac"]["dac_port"],
+            ),
+            "extra": {
+                "executor_port": cfg["executor"]["executor_port"],
+                "sequencer_rpc": "http://{}:{}".format(
+                    cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
+                    cfg["sequencer_rpc_port"],
                 ),
-                "extra": {
-                    "executor_port": cfg["executor"]["executor_port"],
-                    "sequencer_rpc": "http://{}:{}".format(
-                        cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
-                        cfg["sequencer_rpc_port"],
-                    ),
-                    "sequencer_ds": "{}:{}".format(
-                        cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
-                        cfg["sequencer_ds_port"],
-                    ),
-                    "rpc_rpc": "http://{}:{}".format(
-                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
-                        cfg["sequencer_rpc_port"],
-                    ),
-                    "rpc_ds": "{}:{}".format(
-                        cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
-                        cfg["sequencer_ds_port"],
-                    ),
-                    "pm_url": "http://{}:{}".format(
-                        cfg["poolmanager"]["service_name"] + cfg["deployment_suffix"],
-                        cfg["poolmanager"]["pm_port"],
-                    ),
-                    "stateless_executor": cfg["executor"]["service_name"]
-                    + cfg["deployment_suffix"],
-                    "sequencer_rpc_port": cfg["sequencer_rpc_port"],
-                    "sequencer_ds_port": cfg["sequencer_ds_port"],
-                    "aggregator_port": cfg["aggregator"]["aggregator_port"],
-                    "aggregator_host": cfg["aggregator"]["service_name"]
-                    + cfg["deployment_suffix"],
-                    "dac_port": cfg["dac"]["dac_port"],
-                    "l1_ws_url": contracts_config.get("l1_ws_url"),
-                    "pm_port": cfg["poolmanager"]["pm_port"],
-                    "bridge_port": cfg["bridge"]["bridge_port"],
-                }
-                | db_configs,
+                "sequencer_ds": "{}:{}".format(
+                    cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
+                    cfg["sequencer_ds_port"],
+                ),
+                "rpc_rpc": "http://{}:{}".format(
+                    cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
+                    cfg["sequencer_rpc_port"],
+                ),
+                "rpc_ds": "{}:{}".format(
+                    cfg["erigon"]["RPC"]["NAME"] + cfg["deployment_suffix"],
+                    cfg["sequencer_ds_port"],
+                ),
+                "pm_url": "http://{}:{}".format(
+                    cfg["poolmanager"]["service_name"] + cfg["deployment_suffix"],
+                    cfg["poolmanager"]["pm_port"],
+                ),
+                "stateless_executor": cfg["executor"]["service_name"]
+                + cfg["deployment_suffix"],
+                "sequencer_rpc_port": cfg["sequencer_rpc_port"],
+                "sequencer_ds_port": cfg["sequencer_ds_port"],
+                "aggregator_port": cfg["aggregator"]["aggregator_port"],
+                "aggregator_host": cfg["aggregator"]["service_name"]
+                + cfg["deployment_suffix"],
+                "dac_port": cfg["dac"]["dac_port"],
+                "l1_ws_url": contracts_config.get("l1_ws_url"),
+                "pm_port": cfg["poolmanager"]["pm_port"],
+                "bridge_port": cfg["bridge"]["bridge_port"],
             }
-        )
+            | db_configs,
+        }
         plan.print("Deploying zkevm contracts on L1")
         contracts_service = import_module(contracts_package).run(plan, contracts_config)
     else:
