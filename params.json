@@ -38,9 +38,9 @@
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "rollup_fork_id": 11,
-    "l2_chain_id": 10101,
+    "l2_chain_id": 1212,
     "validium": false,
-    "image": "hermeznetwork/cdk-sc-deployer:latest",
+    "image": "patata:latest",
     "deploy_gas_token": false
   },
   "executor": {
@@ -48,23 +48,20 @@
     "image": "hermeznetwork/zkevm-prover:v7.0.3-fork.11"
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:2.0.0-RC1-5cf8cf0",
+    "image": "hermeznetwork/cdk-erigon:v2.0.0-beta27",
+    "image_rc1": "hermeznetwork/cdk-erigon:2.0.0-RC1-5cf8cf0",
     "image_beta26": "hermeznetwork/cdk-erigon:v2.0.0-beta26",
     "image_beta25": "hermeznetwork/cdk-erigon:v2.0.0-beta25",
-    "image_beta24": "hermeznetwork/cdk-erigon:v2.0.0-beta24"
-
+    "image_beta24": "hermeznetwork/cdk-erigon:v2.0.0-beta24",
+    "gasless": true
   },
   "dac": {
     "service_name": "dac",
     "image": "0xpolygon/cdk-data-availability:0.0.9"
   },
-  "ssender": {
-    "service_name": "ssender",
-    "image": "hermeznetwork/zkevm-sequence-sender:v0.2.4"
-  },
-  "aggregator": {
-    "service_name": "aggregator",
-    "image": "hermeznetwork/zkevm-aggregator:v0.0.4"
+  "cdknode": {
+    "service_name": "cdknode",
+    "image": "ghcr.io/0xpolygon/cdk:0.3.0-rc1"
   },
   "poolmanager": {
     "service_name": "poolmanager",

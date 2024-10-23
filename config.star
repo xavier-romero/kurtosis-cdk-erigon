@@ -43,7 +43,7 @@ def _get_erigon_config(cfg):
             "ENV_VARS": {},
         },
     }
-    return ERIGON | {"COMMON": ERIGON_COMMON}
+    return cfg | ERIGON | {"COMMON": ERIGON_COMMON}
 
 
 def get_config(args):
@@ -73,9 +73,9 @@ def get_config(args):
         cfg["erigon"]["fork_id"] = args["contracts"]["rollup_fork_id"]
         cfg["erigon"]["deployment_suffix"] = args.get("deployment_suffix")
 
-    if args.get("aggregator"):
-        cfg["aggregator"] = args.get("aggregator")
-        cfg["aggregator"]["aggregator_port"] = _AGGR_PORT
+    if args.get("cdknode"):
+        cfg["cdknode"] = args.get("cdknode")
+        cfg["cdknode"]["aggregator_port"] = _AGGR_PORT
 
     if args.get("executor"):
         cfg["executor"] = args.get("executor")

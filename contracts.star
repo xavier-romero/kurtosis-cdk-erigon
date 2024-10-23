@@ -3,7 +3,8 @@ ARTIFACTS_TO_SAVE = {
     # These files are used from erigon._generate_dynamic_files, ssender, aggregator
     "files": [
         # Configuration files
-        "config/aggregator-config.toml",
+        # "config/aggregator-config.toml",  # Replaced by cdk-node
+        "config/cdknode-config.toml",
         "config/erigon-sequencer.yaml",
         "config/erigon-rpc.yaml",
         "config/executor-config.json",
@@ -11,7 +12,7 @@ ARTIFACTS_TO_SAVE = {
         "config/dynamic-kurtosis-conf.json",
         "config/dynamic-kurtosis-chainspec.json",
         "config/mockprover-config.json",
-        "config/ssender-config.toml",
+        # "config/ssender-config.toml",  # Replaced by cdk-node
         "config/pool-manager-config.toml",
         "config/bridge-config.toml",
         "config/node-genesis.json",
@@ -60,6 +61,7 @@ def run(plan, cfg):
                 "DAC_URLS": cfg.get("dac_urls", ""),
                 "COMPOSE_CONFIG": "0",
                 "JSON_EXTRA_PARAMS": json.encode(cfg.get("extra", {})),
+                "ERIGON_GASLESS": "1" if cfg.get("gasless") else "0",
             },
         ),
     )

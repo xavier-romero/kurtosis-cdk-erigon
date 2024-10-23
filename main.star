@@ -4,8 +4,9 @@ ethereum_package = "./external/ethereum.star"
 executor_package = "./components/executor.star"
 erigon_package = "./components/erigon.star"
 databases_package = "./components/databases.star"
-aggregator_package = "./components/aggregator.star"
-ssender_package = "./components/ssender.star"
+# aggregator_package = "./components/aggregator.star"
+# ssender_package = "./components/ssender.star"
+cdknode_package = "./components/cdknode.star"
 mockprover_package = "./components/mockprover.star"
 dac_package = "./components/dac.star"
 poolmanager_package = "./components/pool-manager.star"
@@ -43,6 +44,7 @@ def run(plan, args):
                 cfg["dac"]["service_name"] + cfg["deployment_suffix"],
                 cfg["dac"]["dac_port"],
             ),
+            "gasless": cfg.get("erigon", {}).get("gasless"),
             "extra": {
                 "executor_port": cfg["executor"]["executor_port"],
                 "sequencer_rpc": "http://{}:{}".format(
@@ -69,8 +71,8 @@ def run(plan, args):
                 + cfg["deployment_suffix"],
                 "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                 "sequencer_ds_port": cfg["sequencer_ds_port"],
-                "aggregator_port": cfg["aggregator"]["aggregator_port"],
-                "aggregator_host": cfg["aggregator"]["service_name"]
+                "aggregator_port": cfg["cdknode"]["aggregator_port"],
+                "aggregator_host": cfg["cdknode"]["service_name"]
                 + cfg["deployment_suffix"],
                 "dac_port": cfg["dac"]["dac_port"],
                 "l1_ws_url": contracts_config.get("l1_ws_url"),
@@ -105,10 +107,12 @@ def run(plan, args):
     )
 
     # Deploy sequence-sender
-    import_module(ssender_package).run(plan, cfg.get("ssender"))
-
+    # import_module(ssender_package).run(plan, cfg.get("ssender"))
     # Deploy Aggregator
-    import_module(aggregator_package).run(plan, cfg.get("aggregator"))
+    # import_module(aggregator_package).run(plan, cfg.get("aggregator"))
+
+    # Deploy sequence-sender
+    import_module(cdknode_package).run(plan, cfg.get("cdknode"))
 
     # Deploy mockprover
     import_module(mockprover_package).run(plan, cfg.get("mockprover"))
