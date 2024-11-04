@@ -2,8 +2,8 @@ MOCKPROVER_CONFIG_FILE = "mockprover-config.json"
 
 
 def run(plan, cfg):
-    service_name = cfg["service_name"] + cfg["deployment_suffix"]
-    service_image = cfg["image"]
+    service_name = cfg["mockprover"]["service_name"] + cfg["deployment_suffix"]
+    service_image = cfg["mockprover"].get("image", cfg["image"])
     service_files = {
         "/config": Directory(
             artifact_names=[plan.get_files_artifact(MOCKPROVER_CONFIG_FILE)]

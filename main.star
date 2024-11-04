@@ -46,7 +46,7 @@ def run(plan, args):
             ),
             "gasless": cfg.get("erigon", {}).get("gasless"),
             "extra": {
-                "executor_port": cfg["executor"]["executor_port"],
+                "executor_port": cfg["zkProver"]["executor"]["executor_port"],
                 "sequencer_rpc": "http://{}:{}".format(
                     cfg["erigon"]["SEQUENCER"]["NAME"] + cfg["deployment_suffix"],
                     cfg["sequencer_rpc_port"],
@@ -67,7 +67,7 @@ def run(plan, args):
                     cfg["poolmanager"]["service_name"] + cfg["deployment_suffix"],
                     cfg["poolmanager"]["pm_port"],
                 ),
-                "stateless_executor": cfg["executor"]["service_name"]
+                "stateless_executor": cfg["zkProver"]["executor"]["service_name"]
                 + cfg["deployment_suffix"],
                 "sequencer_rpc_port": cfg["sequencer_rpc_port"],
                 "sequencer_ds_port": cfg["sequencer_ds_port"],
@@ -91,7 +91,7 @@ def run(plan, args):
         dac_service = import_module(dac_package).run(plan, cfg.get("dac"))
 
     # Deploy executor
-    import_module(executor_package).run(plan, cfg.get("executor"))
+    import_module(executor_package).run(plan, cfg.get("zkProver"))
 
     # Deploy Erigon
     import_module(erigon_package).run(plan, cfg.get("erigon"))
@@ -115,7 +115,7 @@ def run(plan, args):
     import_module(cdknode_package).run(plan, cfg.get("cdknode"))
 
     # Deploy mockprover
-    import_module(mockprover_package).run(plan, cfg.get("mockprover"))
+    import_module(mockprover_package).run(plan, cfg.get("zkProver"))
 
     # Deploy Bridge
     import_module(bridge_package).run(plan, cfg.get("bridge"))

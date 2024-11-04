@@ -9,6 +9,9 @@
     ]
   },
   "addresses": {
+    "admin": {
+      "mnemonic": "code code code code code code code code code code code quality"
+    },
     "sequencer": {
       "address": "0x5b06837A43bdC3dD9F114558DAf4B26ed49842Ed",
       "private_key": "0x183c492d0ba156041a7f31a1b188958a7a22eebadca741a7fe64436092dc3181"
@@ -39,41 +42,34 @@
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
     "rollup_fork_id": 11,
     "l2_chain_id": 1212,
-    "validium": false,
-    "image": "patata:latest",
+    "validium": true,
+    "image": "hermeznetwork/cdk-sc-deployer:latest",
     "deploy_gas_token": false
   },
-  "executor": {
-    "service_name": "executor",
-    "image": "hermeznetwork/zkevm-prover:v7.0.3-fork.11"
+  "zkProver": {
+    "image": "hermeznetwork/zkevm-prover:v7.0.4-fork.11",
+    "executor": { "service_name": "executor" },
+    "mockprover": { "service_name": "mockprover" }
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.0.0-beta27",
-    "image_rc1": "hermeznetwork/cdk-erigon:2.0.0-RC1-5cf8cf0",
-    "image_beta26": "hermeznetwork/cdk-erigon:v2.0.0-beta26",
-    "image_beta25": "hermeznetwork/cdk-erigon:v2.0.0-beta25",
-    "image_beta24": "hermeznetwork/cdk-erigon:v2.0.0-beta24",
-    "gasless": true
-  },
-  "dac": {
-    "service_name": "dac",
-    "image": "0xpolygon/cdk-data-availability:0.0.9"
+    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta2",
+    "gasless": false
   },
   "cdknode": {
     "service_name": "cdknode",
-    "image": "ghcr.io/0xpolygon/cdk:0.3.0-rc1"
+    "image": "ghcr.io/0xpolygon/cdk:0.3.1"
+  },
+  "dac": {
+    "service_name": "dac",
+    "image": "0xpolygon/cdk-data-availability:0.0.10"
   },
   "poolmanager": {
     "service_name": "poolmanager",
-    "image": "hermeznetwork/zkevm-pool-manager:v0.1.0"
+    "image": "hermeznetwork/zkevm-pool-manager:v0.1.1"
   },
   "bridge": {
     "service_name": "bridge",
-    "image": "hermeznetwork/zkevm-bridge-service:v0.5.0"
-  },
-  "mockprover": {
-    "service_name": "mockprover",
-    "image": "hermeznetwork/zkevm-prover:v7.0.3-fork.11"
+    "image": "hermeznetwork/zkevm-bridge-service:v0.6.0-RC1"
   },
   "blockscout": {
     "enabled": false

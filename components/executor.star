@@ -2,15 +2,15 @@ EXECUTOR_CONFIG_FILE = "executor-config.json"
 
 
 def run(plan, cfg):
-    service_name = cfg["service_name"] + cfg["deployment_suffix"]
-    service_image = cfg["image"]
+    service_name = cfg["executor"]["service_name"] + cfg["deployment_suffix"]
+    service_image = cfg["executor"].get("image", cfg["image"])
     service_files = {
         "/config": Directory(
             artifact_names=[plan.get_files_artifact(EXECUTOR_CONFIG_FILE)]
         )
     }
-    service_port = cfg["executor_port"]
-    port_name = cfg["service_name"]
+    service_port = cfg["executor"]["executor_port"]
+    port_name = cfg["executor"]["service_name"]
 
     cpu_arch_result = plan.run_sh(
         description="Determining CPU system architecture",
