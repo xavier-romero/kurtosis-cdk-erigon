@@ -40,14 +40,14 @@
   "contracts": {
     "l1_rpc_url": "http://el-1-geth-lighthouse:8545",
     "l1_ws_url": "ws://el-1-geth-lighthouse:8546",
-    "rollup_fork_id": 11,
+    "rollup_fork_id": 12,
     "l2_chain_id": 1212,
     "validium": true,
     "image": "hermeznetwork/cdk-sc-deployer:latest",
     "deploy_gas_token": false
   },
   "zkProver": {
-    "image": "hermeznetwork/zkevm-prover:v7.0.4-fork.11",
+    "image": "hermeznetwork/zkevm-prover:v8.0.0-RC14-fork.12",
     "executor": { "service_name": "executor" },
     "mockprover": { "service_name": "mockprover" }
   },
