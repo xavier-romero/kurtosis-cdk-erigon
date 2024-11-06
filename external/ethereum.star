@@ -34,5 +34,14 @@ def run(plan, cfg):
                 "preset": cfg["preset"],
             },
             "additional_services": cfg["additional_services"],
+            "port_publisher": {
+                "el": {
+                    "enabled": cfg.get("rpc_public_port", False),
+                    # tcp-discovery uses first available port (18121)
+                    # engine-rpc uses next available port (18122)
+                    # finally, rpc uses third available port (18123)
+                    "public_port_start": 18121,
+                },
+            },
         },
     )

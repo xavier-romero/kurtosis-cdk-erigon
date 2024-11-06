@@ -6,7 +6,8 @@
     "seconds_per_slot": 1,
     "preset": "minimal",
     "additional_services": [
-    ]
+    ],
+    "rpc_public_port": false
   },
   "addresses": {
     "admin": {
@@ -53,7 +54,7 @@
     "mockprover": { "service_name": "mockprover" }
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta2",
+    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta4",
     "gasless": false,
     "rpc_public_port": false
   },
@@ -72,7 +73,8 @@
   },
   "bridge": {
     "service_name": "bridge",
-    "image": "hermeznetwork/zkevm-bridge-service:v0.6.0-RC1"
+    "image": "hermeznetwork/zkevm-bridge-service:v0.6.0-RC1",
+    "bridge_public_port": false
   },
   "blockscout": {
     "enabled": false
