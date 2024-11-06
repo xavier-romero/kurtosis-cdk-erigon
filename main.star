@@ -115,7 +115,8 @@ def run(plan, args):
     import_module(cdknode_package).run(plan, cfg.get("cdknode"))
 
     # Deploy mockprover
-    import_module(mockprover_package).run(plan, cfg.get("zkProver"))
+    if not contracts_config.get("real_verifier"):
+        import_module(mockprover_package).run(plan, cfg.get("zkProver"))
 
     # Deploy Bridge
     import_module(bridge_package).run(plan, cfg.get("bridge"))

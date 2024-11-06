@@ -51,7 +51,7 @@ def run(plan, cfg):
                 "L1_RPC_URL": cfg["l1_rpc_url"],
                 "L1_FUNDED_MNEMONIC": cfg["l1_funded_mnemonic"],
                 "FORKID": str(cfg["rollup_fork_id"]),
-                "REAL_VERIFIER": "0",
+                "REAL_VERIFIER": "1" if cfg.get("real_verifier") else "0",
                 "NETWORK_NAME": "kurtosis",
                 "DEPLOY_GAS_TOKEN": "1" if cfg["deploy_gas_token"] else "0",
                 "L2_CHAIN_ID": str(cfg["l2_chain_id"]),
