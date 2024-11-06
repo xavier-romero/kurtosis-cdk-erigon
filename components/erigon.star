@@ -1,5 +1,6 @@
 def _deploy_service(plan, cfg, service):
     service_ports = cfg[service]["PORTS"]
+    public_ports = cfg[service].get("PUBLIC_PORTS", [])
     service_name = cfg[service]["NAME"] + cfg["deployment_suffix"]
     port_name = cfg[service]["NAME"]
     service_image = cfg[service]["IMAGE"]
@@ -16,6 +17,12 @@ def _deploy_service(plan, cfg, service):
                 service_port, application_protocol="http", wait="20s"
             )
             for service_port in service_ports
+        },
+        public_ports={
+            "{}{}".format(port_name, service_port): PortSpec(
+                service_port, application_protocol="http", wait="20s"
+            )
+            for service_port in public_ports
         },
         env_vars=service_vars,
         files={

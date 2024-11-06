@@ -40,6 +40,7 @@ def _get_erigon_config(cfg):
                 ERIGON_COMMON["CONFIG_PATH"] + "/erigon-rpc.yaml",
             ],
             "PORTS": [_SEQUENCER_RPC_PORT, _SEQUENCER_DS_PORT],
+            "PUBLIC_PORTS": [_RPC_HTTP_PORT] if cfg.get("rpc_public_port") else [],
             "ENV_VARS": {},
         },
     }
