@@ -44,23 +44,23 @@
     "rollup_fork_id": 13,
     "l2_chain_id": 1313,
     "validium": true,
-    "image": "hermeznetwork/cdk-sc-deployer:latest",
+    "image": "xavierromero/cdk-sc-deployer:latest",
     "deploy_gas_token": false,
     "real_verifier": false
   },
   "zkProver": {
-    "image": "hermeznetwork/zkevm-prover:v9.0.0-RC1-fork.13",
+    "image": "hermeznetwork/zkevm-prover:v9.0.0-RC2-fork.13",
     "executor": { "service_name": "executor" },
     "mockprover": { "service_name": "mockprover" }
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta4",
+    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta6",
     "gasless": false,
     "rpc_public_port": false
   },
   "cdknode": {
     "service_name": "cdknode",
-    "image": "ghcr.io/0xpolygon/cdk:0.3.1",
+    "image": "ghcr.io/0xpolygon/cdk:0.4.0-beta7",
     "aggr_public_port": false
   },
   "dac": {
@@ -69,7 +69,7 @@
   },
   "poolmanager": {
     "service_name": "poolmanager",
-    "image": "hermeznetwork/zkevm-pool-manager:v0.1.1"
+    "image": "hermeznetwork/zkevm-pool-manager:v0.1.2"
   },
   "bridge": {
     "service_name": "bridge",

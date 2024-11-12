@@ -21,8 +21,9 @@ def run(plan, cfg):
     service_cmd = [
         "/bin/sh",
         "-c",
-        "cdk-node run -custom-network-file=/config/"
-        + CDKNODE_GENESIS_FILE
+        # "cdk-node run -custom-network-file=/config/"
+        # + CDKNODE_GENESIS_FILE
+        + "cdk-node run"
         + " -cfg=/config/"
         + CDKNODE_CONFIG_FILE
         + " -components=aggregator,sequence-sender",
