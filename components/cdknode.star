@@ -23,8 +23,7 @@ def run(plan, cfg):
         "-c",
         # "cdk-node run -custom-network-file=/config/"
         # + CDKNODE_GENESIS_FILE
-        + "cdk-node run"
-        + " -cfg=/config/"
+        "cdk-node run -cfg=/config/"
         + CDKNODE_CONFIG_FILE
         + " -components=aggregator,sequence-sender",
     ]

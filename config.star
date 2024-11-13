@@ -48,8 +48,8 @@ def _get_erigon_config(cfg):
 
 
 def get_config(args):
-    params = read_file(src=_PARAMS_FILE)
-    args = json.decode(params) | args
+    params = read_file(src=args.get("config", _PARAMS_FILE))
+    args = json.decode(params)
 
     cfg = {
         # "suffix": args.get("deployment_suffix")
