@@ -54,13 +54,13 @@
     "mockprover": { "service_name": "mockprover" }
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.60.0-beta8",
+    "image": "hermeznetwork/cdk-erigon:v2.61.0-RC1",
     "gasless": false,
     "rpc_public_port": false
   },
   "cdknode": {
     "service_name": "cdknode",
-    "image": "ghcr.io/0xpolygon/cdk:0.4.0-beta8",
+    "image": "ghcr.io/0xpolygon/cdk:0.4.0",
     "aggr_public_port": false
   },
   "dac": {
