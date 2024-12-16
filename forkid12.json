@@ -54,13 +54,13 @@
     "mockprover": { "service_name": "mockprover" }
   },
   "erigon": {
-    "image": "hermeznetwork/cdk-erigon:v2.61.0-RC1",
+    "image": "hermeznetwork/cdk-erigon:v2.61.0",
     "gasless": false,
     "rpc_public_port": false
   },
   "cdknode": {
     "service_name": "cdknode",
-    "image": "ghcr.io/0xpolygon/cdk:0.4.0",
+    "image": "ghcr.io/0xpolygon/cdk:0.5.0-rc1",
     "aggr_public_port": false
   },
   "dac": {
@@ -73,7 +73,7 @@
   },
   "bridge": {
     "service_name": "bridge",
-    "image": "hermeznetwork/zkevm-bridge-service:v0.6.0-RC1",
+    "image": "hermeznetwork/zkevm-bridge-service:v0.6.0-RC3",
     "bridge_public_port": false
   },
   "blockscout": {
