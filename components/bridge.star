@@ -15,7 +15,7 @@ def run(plan, cfg):
         )
     }
     service_cmd = ["/app/zkevm-bridge", "run", "--cfg", "/config/" + BRIDGE_CONFIG_FILE]
-    service_ports = {"bridge": PortSpec(cfg["bridge_port"], application_protocol="tcp")}
+    service_ports = {"bridge": PortSpec(cfg["bridge_port"], application_protocol="http")}
     public_ports = service_ports if is_bridge_public_port else {}
 
     service_config = ServiceConfig(
