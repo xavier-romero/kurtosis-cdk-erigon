@@ -25,14 +25,14 @@ def run(plan, args):
 
     # L1 deployment
     l1_config = cfg.get("l1", {})
-    if l1_config:
+    if l1_config.get("deploy", True):
         import_module(ethereum_package).run(plan, l1_config)
     else:
         plan.print("Skipping the deployment of a local L1")
 
     contracts_config = cfg.get("contracts")
     # Deploy zkevm contracts on L1.
-    if contracts_config:
+    if contracts_config.get("deploy", True):
         addresses = cfg.get("addresses")
         if not addresses:
             fail("Missing addresses for zkevm contracts")
@@ -99,12 +99,13 @@ def run(plan, args):
     # Deploy Pool Manager
     import_module(poolmanager_package).run(plan, cfg.get("poolmanager"))
 
-    # Allow some time for DS to start
-    plan.exec(
-        description="Allowing time for Sequencer DS to avoid SequenceSender failure",
-        service_name=contracts_service.name,
-        recipe=ExecRecipe(command=["sleep", "10"]),
-    )
+    if contracts_config.get("deploy", True):
+        # Allow some time for DS to start
+        plan.exec(
+            description="Allowing time for Sequencer DS to avoid SequenceSender failure",
+            service_name=contracts_service.name,
+            recipe=ExecRecipe(command=["sleep", "10"]),
+        )
 
     # Deploy sequence-sender
     # import_module(ssender_package).run(plan, cfg.get("ssender"))

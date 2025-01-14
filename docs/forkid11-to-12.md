@@ -39,17 +39,7 @@ cast rpc --rpc-url $(kurtosis port print cdk sequencer001 sequencer8123) zkevm_v
 cast rpc --rpc-url $(kurtosis port print cdk sequencer001 sequencer8123) zkevm_verifiedBatchNumber
 ```
 
-5. Stop critical services
-```bash
-kurtosis service stop cdk cdknode001 
-kurtosis service stop cdk mockprover001 
-kurtosis service stop cdk bridge001 
-kurtosis service stop cdk rpc001 
-kurtosis service stop cdk sequencer001 
-kurtosis service stop cdk executor001 
-```
-
-6. Get into contracts service and set up required vars
+5. Get into contracts service and set up required vars
 ```bash
 kurtosis service shell cdk contracts001
 cd /output
@@ -59,6 +49,20 @@ CONSENSUS=$(cast call $ROLLUP_MAN 'rollupTypeMap(uint32)(address,address,uint64,
 GENESIS=$(cat deployment/create_rollup_output.json  | jq -r .genesis)
 PRIV_KEY=0x42b6e34dc21598a807dc19d7784c71b2a7a01f6480dc6f58258f78e539f1a1fa
 ROLLUP=$(cat deployment/create_rollup_output.json | jq -r .rollupAddress)
+```
+Check batch status on chain:
+```bash
+cast call $ROLLUP_MAN "rollupIDToRollupData(uint32)(address,uint64,address,uint64,bytes32,uint64,uint64,uint64,uint64,uint64,uint64,uint8)" 1 
+```
+
+6. Stop critical services
+```bash
+kurtosis service stop cdk cdknode001 
+kurtosis service stop cdk mockprover001 
+kurtosis service stop cdk bridge001 
+kurtosis service stop cdk rpc001 
+kurtosis service stop cdk sequencer001 
+kurtosis service stop cdk executor001 
 ```
 
 7. Deploy new verifier
